@@ -22,7 +22,11 @@ export default function VideoInfoModal({ videoData, showP }) {
 
   return (
     <>
-      <Modal className="rtl video-info-modal" show={show} onHide={handleClose}>
+      <Modal
+        className="rtl video-info-modal p-0 m-0"
+        show={show}
+        onHide={handleClose}
+      >
         <Modal.Header className="video-info-modal-header bg-1 text-1">
           <div className="custom-close-button" onClick={handleClose}>
             <Button className="btn btn-modal-close btn-no-bs d-flex align-items-center bg-1">
@@ -54,14 +58,18 @@ export default function VideoInfoModal({ videoData, showP }) {
                 <div className="d-flex align-items-center mt-3">
                   <BsEye style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
-                    {videoData.statistics.viewCount}
+                    {parseInt(videoData.statistics.viewCount).toLocaleString(
+                      "en-US"
+                    )}
                   </span>
                 </div>
 
                 <div className="d-flex align-items-center mt-3">
                   <BsHandThumbsUp style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
-                    {videoData.statistics.likeCount}
+                    {parseInt(videoData.statistics.likeCount).toLocaleString(
+                      "en-US"
+                    )}
                   </span>
                 </div>
 
