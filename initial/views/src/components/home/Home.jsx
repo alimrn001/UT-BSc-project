@@ -1,9 +1,9 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { urlIsValid } from "../../utils/youtubeAPI/YTAPI";
 import { BsInfoCircle } from "react-icons/bs";
-import { useState } from "react";
 import { YTUrlIsValid, retrieveVideoData } from "../../utils/youtubeAPI/YTAPI";
 import VideoInfoModal from "../modal/VideoInfoModal";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 
 export default function Home() {
   const [isCheckingVideo, setIsCheckingVideo] = useState(false);
@@ -60,34 +60,32 @@ export default function Home() {
       </div>
 
       <div className="url-input-group">
-        <div class="input-group  mb-3 ltr" style={{ height: "50px" }}>
-          <button
-            class="btn btn-gradient input-group-text"
+        <InputGroup className="mb-3 ltr" style={{ height: "50px" }}>
+          <Button
+            className="btn-gradient"
             id="basic-addon2"
             onClick={handleUrlSubmit}
           >
             <span className="text-1">
-              {!isCheckingVideo && <span>مشاهده</span>}
-              {isCheckingVideo && (
-                <div
-                  class="spinner-border d-flex align-items-center"
-                  role="status"
-                >
-                  <span class="visually-hidden">Loading...</span>
+              {!isCheckingVideo ? (
+                <span>مشاهده</span>
+              ) : (
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               )}
             </span>
-          </button>
-          <input
+          </Button>
+          <FormControl
             type="text"
-            class="form-control url-input-field"
+            className="url-input-field"
             placeholder="لینک ویدیو را اینجا قرار دهید"
             aria-describedby="basic-addon2"
             value={videoUrl}
             onChange={(e) => handleVideoUrlChange(e)}
             onSubmit={handleUrlSubmit}
           />
-        </div>
+        </InputGroup>
         {!urlIsValid && !isCheckingVideo && urlIsRequested && (
           <div className="text-danger">
             <BsInfoCircle style={{ height: 20, width: 20 }} />
@@ -97,10 +95,7 @@ export default function Home() {
       </div>
 
       {showVideoDataModal && (
-        <VideoInfoModal
-          videoData={modalVideoData}
-          onClose={() => setShowVideoDataModal(false)} // Add a prop to close the modal
-        />
+        <VideoInfoModal showP={true} videoData={modalVideoData} />
       )}
     </div>
   );
