@@ -1,0 +1,7 @@
+.theme-toggle-btn {
+  border-radius: 50%;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--color-purple) !important;
+}

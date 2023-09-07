@@ -1,0 +1,39 @@
+:root {
+    --color-purple: #8244ff;
+    --color-pink: #ff57c3;
+    --color-green: #16f8b6;
+
+    --color-bg-dark-1: #0d1224;
+    --color-text-dark-1: #ffffff;
+
+    --color-bg-light-1: #f4f7fb;
+    --color-text-dark-1: #041333;
+}
+
+@media(prefers-color-scheme: dark) {
+    :root {
+        --color-bg-1: var(--color-bg-dark-1);
+        --color-text-1: var(--color-text-dark-1);
+    }
+}
+
+@media(prefers-color-scheme: light) {
+    :root {
+        --color-bg-1: var(--color-bg-light-1);
+        --color-text-1: var(--color-text-light-1);
+    }
+}
+
+[color-scheme="dark"] {
+    --color-bg-1: var(--color-bg-dark-1);
+    --color-text-1: var(--color-text-dark-1);
+}
+
+[color-scheme="light"] {
+    --color-bg-1: var(--color-bg-light-1);
+    --color-text-1: var(--color-text-light-1);
+}
+
+.bg-1 {
+    background-color: var(--color-bg-1);
+}
