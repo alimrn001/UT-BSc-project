@@ -10,6 +10,11 @@ import {
   BsClock,
 } from "react-icons/bs";
 
+import {
+  convertYouTubeDurationToMinutes,
+  convertYouTubeDateToString,
+} from "../../utils/dateTime/DateTimeConverter";
+
 export default function VideoInfoModal({ videoData, showP }) {
   const [show, setShow] = useState(showP);
   const handleClose = () => setShow(false);
@@ -26,11 +31,15 @@ export default function VideoInfoModal({ videoData, showP }) {
           </div>
           <Modal.Title>اطلاعات ویدیو</Modal.Title>
         </Modal.Header>
+
         <Modal.Body className="bg-1 text-1 ltr">
           <Card className="bg-1 text-1 video-info-modal-card">
             <Card.Img
               variant="top"
-              src={videoData.videoInfo.snippet.thumbnails.standard.url}
+              src={
+                videoData.videoInfo.snippet.thumbnails.standard?.url ||
+                videoData.videoInfo.snippet.thumbnails.default.url
+              }
             />
             <Card.Body className="bg-1 text-1">
               <Card.Title>{videoData.videoInfo.snippet.title}</Card.Title>
@@ -59,14 +68,19 @@ export default function VideoInfoModal({ videoData, showP }) {
                 <div className="d-flex align-items-center mt-3">
                   <BsCalendarDate style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
-                    {videoData.videoInfo.snippet.publishedAt}
+                    {new Date(
+                      videoData.videoInfo.snippet.publishedAt
+                    ).toDateString()}
                   </span>
                 </div>
 
                 <div className="d-flex align-items-center mt-3">
                   <BsClock style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
-                    {videoData.videoInfo.contentDetails.duration}
+                    {convertYouTubeDurationToMinutes(
+                      videoData.videoInfo.contentDetails.duration
+                    ).toFixed(0)}{" "}
+                    min
                   </span>
                 </div>
 
@@ -83,6 +97,7 @@ export default function VideoInfoModal({ videoData, showP }) {
             </Card.Body>
           </Card>
         </Modal.Body>
+
         <Modal.Footer className="video-info-modal-footer d-flex justify-content-between bg-1 text-1">
           <Button className="btn btn-pink btn-no-bs">مشاهده / دانلود</Button>
           <Button className="btn btn-purple btn-no-bs" onClick={handleClose}>
