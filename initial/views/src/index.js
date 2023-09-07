@@ -9,7 +9,7 @@ import "./styles/navbar.css";
 import "./styles/home.css";
 // import "normalize.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

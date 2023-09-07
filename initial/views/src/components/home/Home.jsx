@@ -2,13 +2,16 @@ import { Link } from "react-router-dom";
 import { urlIsValid } from "../../utils/youtubeAPI/YTAPI";
 import { BsInfoCircle } from "react-icons/bs";
 import { useState } from "react";
-import { YTUrlIsValid } from "../../utils/youtubeAPI/YTAPI";
+import { YTUrlIsValid, retrieveVideoData } from "../../utils/youtubeAPI/YTAPI";
+import VideoInfoModal from "../modal/VideoInfoModal";
 
 export default function Home() {
   const [isCheckingVideo, setIsCheckingVideo] = useState(false);
   const [urlIsValid, setUrlIsValid] = useState(false);
   const [urlIsRequested, setUrlIsRequested] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
+  const [modalVideoData, setModalVideoData] = useState(null);
+  const [showVideoDataModal, setShowVideoDataModal] = useState(false);
 
   const handleVideoUrlChange = (event) => {
     setVideoUrl(event.target.value);
@@ -24,6 +27,12 @@ export default function Home() {
       const result = await YTUrlIsValid(videoUrl);
       console.log("result is : " + result);
       setUrlIsValid(result);
+      if (result) {
+        const videoData = await retrieveVideoData(videoUrl);
+        setModalVideoData(videoData);
+        setShowVideoDataModal(true);
+        console.log(videoData);
+      }
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -86,6 +95,13 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {showVideoDataModal && (
+        <VideoInfoModal
+          videoData={modalVideoData}
+          onClose={() => setShowVideoDataModal(false)} // Add a prop to close the modal
+        />
+      )}
     </div>
   );
 }
