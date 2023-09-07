@@ -1,6 +1,33 @@
+.modal-content {
+  background-color: var(--color-bg-1) !important;
+}
+
 .custom-close-button {
   position: absolute;
   top: 0;
   left: 0;
   padding: 15px;
+}
+
+.video-info-modal-header {
+  border-bottom: none !important;
+}
+
+.video-info-modal-card {
+  border: none !important;
+}
+
+.btn-modal-close {
+  border: none !important;
+  background-color: var(--color-bg-1) !important;
+  color: var(--color-text-1) !important;
+  font-size: large !important;
+}
+
+.video-info-item {
+  font-size: 16px;
+}
+
+.video-info-modal-footer {
+  border-top: none !important;
 }

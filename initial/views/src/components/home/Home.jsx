@@ -63,7 +63,7 @@ export default function Home() {
       <div className="url-input-group">
         <InputGroup className="mb-3 ltr" style={{ height: "50px" }}>
           <Button
-            className="btn-gradient"
+            className="btn-gradient btn-no-bs"
             id="basic-addon2"
             onClick={handleUrlSubmit}
           >

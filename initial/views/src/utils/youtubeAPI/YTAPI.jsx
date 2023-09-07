@@ -13,7 +13,6 @@ export async function videoExists(url) {
   if (videoId === undefined) {
     videoId = extractVideoIdFromUrl(url);
   }
-  console.log(videoId + " is id");
   if (!videoId) {
     return false;
   }
@@ -42,20 +41,19 @@ export async function YTUrlIsValid(url) {
 
 export async function retrieveVideoData(url) {
   let videoId = url.split("v=")[1];
-  console.log("here");
   if (videoId === undefined) {
     videoId = extractVideoIdFromUrl(url);
   }
   try {
     const response = await axios.get(
-      `https://www.googleapis.com/youtube/v3/videos?key=${YT_API_KEY}&part=snippet,localizations&id=${videoId}`
+      `https://www.googleapis.com/youtube/v3/videos?key=${YT_API_KEY}&part=snippet,localizations,contentDetails,statistics&id=${videoId}`
     );
 
     if (response.data.items.length > 0) {
       const videoInfo = response.data.items[0];
-      const snippet = videoInfo.snippet;
       const localizations = videoInfo.localizations || {};
       const contentDetails = videoInfo.contentDetails || {};
+      const statistics = videoInfo.statistics || {};
 
       // Available Subtitles
       const subtitles = Object.keys(localizations);
@@ -64,6 +62,7 @@ export async function retrieveVideoData(url) {
         videoInfo,
         subtitles,
         contentDetails,
+        statistics,
       };
     } else {
       throw new Error("Video not found");

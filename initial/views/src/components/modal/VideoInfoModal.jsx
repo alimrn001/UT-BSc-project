@@ -1,5 +1,14 @@
 import { useState } from "react";
 import { Button, Modal, Card } from "react-bootstrap";
+import {
+  BsXLg,
+  BsTv,
+  BsEye,
+  BsHandThumbsUp,
+  BsTranslate,
+  BsCalendarDate,
+  BsClock,
+} from "react-icons/bs";
 
 export default function VideoInfoModal({ videoData, showP }) {
   const [show, setShow] = useState(showP);
@@ -8,35 +17,76 @@ export default function VideoInfoModal({ videoData, showP }) {
 
   return (
     <>
-      <Modal className="rtl" show={show} onHide={handleClose}>
-        <Modal.Header>
+      <Modal className="rtl video-info-modal" show={show} onHide={handleClose}>
+        <Modal.Header className="video-info-modal-header bg-1 text-1">
           <div className="custom-close-button" onClick={handleClose}>
-            <Button className="btn-close"></Button>
+            <Button className="btn btn-modal-close btn-no-bs d-flex align-items-center bg-1">
+              <BsXLg />
+            </Button>
           </div>
           <Modal.Title>اطلاعات ویدیو</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="ltr">
-          <Card>
+        <Modal.Body className="bg-1 text-1 ltr">
+          <Card className="bg-1 text-1 video-info-modal-card">
             <Card.Img
               variant="top"
               src={videoData.videoInfo.snippet.thumbnails.standard.url}
             />
-            <Card.Body>
+            <Card.Body className="bg-1 text-1">
               <Card.Title>{videoData.videoInfo.snippet.title}</Card.Title>
               <Card.Text>
-                <p>Channel: {videoData.videoInfo.snippet.channelTitle}</p>
-                <p>Published At: {videoData.videoInfo.snippet.publishedAt}</p>
+                <div className="d-flex align-items-center">
+                  <BsTv style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.videoInfo.snippet.channelTitle}
+                  </span>
+                </div>
+
+                <div className="d-flex align-items-center mt-3">
+                  <BsEye style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.statistics.viewCount}
+                  </span>
+                </div>
+
+                <div className="d-flex align-items-center mt-3">
+                  <BsHandThumbsUp style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.statistics.likeCount}
+                  </span>
+                </div>
+
+                <div className="d-flex align-items-center mt-3">
+                  <BsCalendarDate style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.videoInfo.snippet.publishedAt}
+                  </span>
+                </div>
+
+                <div className="d-flex align-items-center mt-3">
+                  <BsClock style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.videoInfo.contentDetails.duration}
+                  </span>
+                </div>
+
+                <div className="d-flex align-items-center mt-3">
+                  <BsTranslate style={{ height: 20, width: 20 }} />
+                  <span className="video-info-item ps-3">
+                    {videoData.videoInfo.snippet.defaultAudioLanguage
+                      ? videoData.videoInfo.snippet.defaultAudioLanguage
+                      : "-"}
+                  </span>
+                </div>
               </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
+              {/* <Button variant="primary">Go somewhere</Button> */}
             </Card.Body>
           </Card>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-start">
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+        <Modal.Footer className="video-info-modal-footer d-flex justify-content-between bg-1 text-1">
+          <Button className="btn btn-pink btn-no-bs">مشاهده / دانلود</Button>
+          <Button className="btn btn-purple btn-no-bs" onClick={handleClose}>
+            بازگشت
           </Button>
         </Modal.Footer>
       </Modal>

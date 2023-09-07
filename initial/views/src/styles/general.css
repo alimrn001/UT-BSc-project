@@ -66,35 +66,39 @@ body {
 }
 
 .bg-1 {
-  background-color: var(--color-bg-1);
+  background-color: var(--color-bg-1) !important;
+}
+
+.bg-2 {
+  background-color: var(--color-bg-2) !important;
 }
 
 .bg-purple {
-  background-color: var(--color-purple);
+  background-color: var(--color-purple) !important;
 }
 
 .bg-pink {
-  background-color: var(--color-pink);
+  background-color: var(--color-pink) !important;
 }
 
 .bg-green {
-  background-color: var(--color-green);
+  background-color: var(--color-green) !important;
 }
 
 .text-1 {
-  color: var(--color-text-1);
+  color: var(--color-text-1) !important;
 }
 
 .text-purple {
-  color: var(--color-purple);
+  color: var(--color-purple) !important;
 }
 
 .text-pink {
-  color: var(--color-pink);
+  color: var(--color-pink) !important;
 }
 
 .text-green {
-  color: var(--color-green);
+  color: var(--color-green) !important;
 }
 
 .clear {
@@ -107,6 +111,20 @@ body {
 
 .ltr {
   direction: ltr;
+}
+
+.btn-no-bs:focus {
+  box-shadow: none !important;
+}
+
+.btn-purple {
+  background-color: var(--color-purple) !important;
+  border-color: var(--color-purple) !important;
+}
+
+.btn-pink {
+  background-color: var(--color-pink) !important;
+  border-color: var(--color-pink) !important;
 }
 
 .btn-transparent {
@@ -122,8 +140,4 @@ body {
   ) !important;
   border: solid 1px
     linear-gradient(to right, var(--color-purple), var(--color-pink)) !important;
-}
-
-.btn-gradient:focus {
-  box-shadow: none !important;
 }
