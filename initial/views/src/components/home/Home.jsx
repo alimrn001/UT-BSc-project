@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { urlIsValid } from "../../utils/youtubeAPI/YTAPI";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
             aria-describedby="basic-addon2"
           />
         </div>
+        <div className="d-flex align-items-center"></div>
       </div>
     </div>
   );
