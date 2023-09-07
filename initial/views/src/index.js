@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 
 import "./styles/general.css";
 import "./styles/navbar.css";
+import "./styles/home.css";
+import "normalize.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 

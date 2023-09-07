@@ -24,6 +24,14 @@
   }
 }
 
+html,
+body {
+  background-color: var(--color-bg-1);
+  color: var(--color-text-1);
+  font-size: 14px !important;
+  /* height: 100%; */
+}
+
 [color-scheme="dark"] {
   --color-bg-1: var(--color-bg-dark-1);
   --color-text-1: var(--color-text-dark-1);
