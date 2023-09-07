@@ -22,6 +22,7 @@ export default function Home() {
   const handleUrlSubmit = async () => {
     setIsCheckingVideo(true);
     setUrlIsRequested(true);
+    setShowVideoDataModal(false);
 
     try {
       const result = await YTUrlIsValid(videoUrl);

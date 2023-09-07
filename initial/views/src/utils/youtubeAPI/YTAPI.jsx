@@ -1,9 +1,19 @@
 import axios from "axios";
 
 const YT_API_KEY = "AIzaSyCYvQwzy8PB9dcLwjC9ohf3QFgXU_hnMvM";
-export async function videoExists(url) {
-  const videoId = url.split("v=")[1];
 
+function extractVideoIdFromUrl(url) {
+  // Extract the video ID using a regular expression
+  const match = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+  return match ? match[1] : null;
+}
+
+export async function videoExists(url) {
+  let videoId = url.split("v=")[1];
+  if (videoId === undefined) {
+    videoId = extractVideoIdFromUrl(url);
+  }
+  console.log(videoId + " is id");
   if (!videoId) {
     return false;
   }
@@ -31,7 +41,11 @@ export async function YTUrlIsValid(url) {
 }
 
 export async function retrieveVideoData(url) {
-  const videoId = url.split("v=")[1];
+  let videoId = url.split("v=")[1];
+  console.log("here");
+  if (videoId === undefined) {
+    videoId = extractVideoIdFromUrl(url);
+  }
   try {
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?key=${YT_API_KEY}&part=snippet,localizations&id=${videoId}`
@@ -41,15 +55,7 @@ export async function retrieveVideoData(url) {
       const videoInfo = response.data.items[0];
       const snippet = videoInfo.snippet;
       const localizations = videoInfo.localizations || {};
-
-      // Video Title
-      const title = snippet.title;
-
-      // Video Description
-      const description = snippet.description;
-
-      // Thumbnail URLs (different sizes)
-      const thumbnails = snippet.thumbnails;
+      const contentDetails = videoInfo.contentDetails || {};
 
       // Available Subtitles
       const subtitles = Object.keys(localizations);
@@ -57,6 +63,7 @@ export async function retrieveVideoData(url) {
       return {
         videoInfo,
         subtitles,
+        contentDetails,
       };
     } else {
       throw new Error("Video not found");
