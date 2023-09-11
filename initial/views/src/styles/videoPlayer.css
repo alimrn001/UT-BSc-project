@@ -1,4 +1,34 @@
+.video-container {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .yt-video {
-    height: 600px;
-    width: 800px;
+  height: 550px;
+}
+
+@media only screen and (max-width: 991px) {
+  .yt-video {
+    height: 400px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .yt-video {
+    height: 300px;
+  }
+  .video-container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .yt-video {
+    height: 250px;
+  }
+  .video-container {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
 }
