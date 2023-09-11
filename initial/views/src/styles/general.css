@@ -141,3 +141,11 @@ body {
   border: solid 1px
     linear-gradient(to right, var(--color-purple), var(--color-pink)) !important;
 }
+
+.select-form-purple {
+  border-color: var(--color-text-1) !important;
+}
+
+.select-form-purple:focus {
+  border-color: var(--color-purple) !important;
+}

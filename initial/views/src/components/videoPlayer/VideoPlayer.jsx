@@ -1,9 +1,28 @@
+import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
 import ReactPlayer from "react-player";
+import {
+  BsXLg,
+  BsTv,
+  BsEye,
+  BsHandThumbsUp,
+  BsTranslate,
+  BsCalendarDate,
+  BsClock,
+} from "react-icons/bs";
+import { Link } from "react-router-dom";
+import NoSubtitleToGetModal from "../modal/NoSubtitleToGetModal";
+import { useState } from "react";
 
 export default function VideoPlayer() {
+  const [showNoSubtitleModal, setShowNoSubtitleModal] = useState(false);
+
+  const handleSubtitleDownloadRequest = () => {
+    setShowNoSubtitleModal(true);
+  };
+
   return (
     <div className="main-body">
-      <div className="video-container">
+      <div className="video-container mb-5">
         <div className="d-flex justify-content-center mt-3">
           <video className="yt-video w-100" controls>
             <source src="https://www.aparat.com/v/EaQbL" type="text/html" />
@@ -14,27 +33,138 @@ export default function VideoPlayer() {
           <div className="ltr text-1 mt-1">
             <h1>Tame Impala - Let It Happen (Official Video)</h1>
           </div>
-          <div className="container">
-            <div className="row">
-              <div className="col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-12 order-xxl-0 order-xl-0 order-lg-0 order-md-1 order-sm-2 order-2">
-                persian persian persian persian persian persian persian persian
-                persian persian persian persian persian persian persian persian
-                persian persian persian persian
-              </div>
-              <div className="col-xxl-8 col-xl-6 col-lg-6 col-md-12 col-sm-12 order-xxl-1 order-xl-1 order-lg-1 order-md-0 order-sm-0 order-0">
+          <Container dir="ltr">
+            <Row>
+              <Col
+                xxl={{ span: 2, order: 0 }}
+                xl={{ span: 3, order: 0 }}
+                lg={{ span: 3, order: 0 }}
+                md={{ span: 6, order: 1 }}
+                sm={{ span: 12 }}
+                className="order-1 mt-1"
+              >
+                <Stack gap={3}>
+                  <div className="d-flex align-items-center">
+                    <BsEye style={{ height: 20, width: 20 }} />
+                    <span className="video-info-item ps-2">
+                      {parseInt(1000000).toLocaleString("en-US")}
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center">
+                    <BsHandThumbsUp style={{ height: 20, width: 20 }} />
+                    <span className="video-info-item ps-2">
+                      {parseInt(100000).toLocaleString("en-US")}
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center">
+                    <BsCalendarDate style={{ height: 20, width: 20 }} />
+                    <span className="video-info-item ps-2">
+                      {/* {new Date(
+                        videoData.videoInfo.snippet.publishedAt
+                      ).toDateString()} */}
+                      2020/5/6
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center">
+                    <BsClock style={{ height: 20, width: 20 }} />
+                    <span className="video-info-item ps-2">
+                      {/* {convertYouTubeDurationToMinutes(
+                        videoData.videoInfo.contentDetails.duration
+                      ).toFixed(0)}{" "} */}
+                      100 min
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center">
+                    <BsTranslate style={{ height: 20, width: 20 }} />
+                    <span className="video-info-item ps-2">
+                      {/* {videoData.videoInfo.snippet.defaultAudioLanguage
+                        ? videoData.videoInfo.snippet.defaultAudioLanguage
+                        : "-"} */}
+                      en-us
+                    </span>
+                  </div>
+                </Stack>
+              </Col>
+
+              <Col
+                xxl={{ span: 8, order: 1 }}
+                xl={{ span: 6, order: 1 }}
+                lg={{ span: 6, order: 1 }}
+                md={{ span: 12, order: 0 }}
+                sm={{ span: 12 }}
+                className="order-0 mt-1"
+              >
                 hello hello hello hello hello hello hello hello hello hello
                 hello hello hello hello hello hello hello hello hello hello
                 hello hello hello hello
-              </div>
-              <div className="col-xxl-2 col-xl-3 col-lg-3 col-md-6 col-sm-12 order-xxl-2 order-xl-2 order-lg-2 order-md-2 order-sm-1 order-1">
-                bye bye bye bye bye bye bye bye bye bye bye bye bye bye bye bye
-                bye bye bye bye bye bye bye bye bye bye bye bye bye bye bye bye
-                bye
-              </div>
-            </div>
-          </div>
+              </Col>
+
+              <Col
+                dir="rtl"
+                xxl={{ span: 2, order: 2 }}
+                xl={{ span: 3, order: 2 }}
+                lg={{ span: 3, order: 2 }}
+                md={{ span: 6, order: 2 }}
+                sm={{ span: 12 }}
+                className="order-2 mt-1"
+              >
+                <Stack gap={3}>
+                  <div className="">
+                    <Link to="/" className="url-purple fs-5">
+                      مشاهده در YouTube
+                    </Link>
+                  </div>
+
+                  <div className="fs-5">
+                    <Button
+                      className="btn-purple btn-no-bs w-100"
+                      onClick={handleSubtitleDownloadRequest}
+                    >
+                      دانلود زیرنویس فارسی
+                    </Button>
+                  </div>
+
+                  <div className="fs-4">دانلود ویدیو</div>
+
+                  <div className="ltr">
+                    <Form.Select
+                      className="bg-1 text-1 btn-no-bs select-form-purple"
+                      aria-label="Default select example"
+                    >
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </Form.Select>
+                  </div>
+
+                  <div>
+                    <Button className="btn-pink btn-no-bs w-100">دانلود</Button>
+                  </div>
+                </Stack>
+              </Col>
+            </Row>
+          </Container>
         </div>
       </div>
+      {
+        <NoSubtitleToGetModal
+          onShow={setShowNoSubtitleModal}
+          showP={showNoSubtitleModal}
+        />
+      }
     </div>
   );
 }
