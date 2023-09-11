@@ -9,16 +9,23 @@ import {
   BsCalendarDate,
   BsClock,
 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
+import { getYtVideoUrlById } from "../../utils/youtubeAPI/YTAPI";
 
 export default function VideoInfoModal({ videoData, showP }) {
   const [show, setShow] = useState(showP);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const navigate = useNavigate();
+
+  const handleWatchVideoRequest = () => {
+    navigate(`watch/${videoData.videoInfo.id}`);
+  };
 
   return (
     <>
@@ -107,7 +114,12 @@ export default function VideoInfoModal({ videoData, showP }) {
         </Modal.Body>
 
         <Modal.Footer className="video-info-modal-footer d-flex justify-content-between bg-1 text-1">
-          <Button className="btn btn-pink btn-no-bs">مشاهده / دانلود</Button>
+          <Button
+            className="btn btn-pink btn-no-bs"
+            onClick={handleWatchVideoRequest}
+          >
+            مشاهده / دانلود
+          </Button>
           <Button className="btn btn-purple btn-no-bs" onClick={handleClose}>
             بازگشت
           </Button>

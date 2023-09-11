@@ -20,6 +20,11 @@ import {
   getYtVideoUrlById,
 } from "../../utils/youtubeAPI/YTAPI";
 
+import {
+  convertYouTubeDurationToMinutes,
+  convertYouTubeDateToString,
+} from "../../utils/dateTime/DateTimeConverter";
+
 export default function VideoPlayer() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -31,6 +36,8 @@ export default function VideoPlayer() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [urlIsValid, setUrlIsValid] = useState(false);
+
+  const [videoData, setVideoData] = useState({});
 
   const handleSubtitleDownloadRequest = () => {
     setShowNoSubtitleModal(true);
@@ -48,8 +55,9 @@ export default function VideoPlayer() {
       console.log("result is : " + result);
       setUrlIsValid(result);
       if (result) {
-        // const videoData = await retrieveVideoData(getYtVideoUrlById(id));
-        // console.log(videoData);
+        const videoData = await retrieveVideoData(getYtVideoUrlById(id));
+        console.log(videoData);
+        setVideoData(videoData);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -71,7 +79,7 @@ export default function VideoPlayer() {
             </div>
             <div>
               <div className="ltr text-1 mt-1">
-                <h1>Tame Impala - Let It Happen (Official Video)</h1>
+                <h1>{videoData.videoInfo.snippet.title}</h1>
               </div>
               <Container dir="ltr">
                 <Row>
@@ -87,44 +95,46 @@ export default function VideoPlayer() {
                       <div className="d-flex align-items-center">
                         <BsEye style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
-                          {parseInt(1000000).toLocaleString("en-US")}
+                          {parseInt(
+                            videoData.statistics.viewCount
+                          ).toLocaleString("en-US")}
                         </span>
                       </div>
 
                       <div className="d-flex align-items-center">
                         <BsHandThumbsUp style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
-                          {parseInt(100000).toLocaleString("en-US")}
+                          {parseInt(
+                            videoData.statistics.likeCount
+                          ).toLocaleString("en-US")}
                         </span>
                       </div>
 
                       <div className="d-flex align-items-center">
                         <BsCalendarDate style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
-                          {/* {new Date(
-                        videoData.videoInfo.snippet.publishedAt
-                      ).toDateString()} */}
-                          2020/5/6
+                          {new Date(
+                            videoData.videoInfo.snippet.publishedAt
+                          ).toDateString()}
                         </span>
                       </div>
 
                       <div className="d-flex align-items-center">
                         <BsClock style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
-                          {/* {convertYouTubeDurationToMinutes(
-                        videoData.videoInfo.contentDetails.duration
-                      ).toFixed(0)}{" "} */}
-                          100 min
+                          {convertYouTubeDurationToMinutes(
+                            videoData.videoInfo.contentDetails.duration
+                          ).toFixed(0)}{" "}
+                          min
                         </span>
                       </div>
 
                       <div className="d-flex align-items-center">
                         <BsTranslate style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
-                          {/* {videoData.videoInfo.snippet.defaultAudioLanguage
-                        ? videoData.videoInfo.snippet.defaultAudioLanguage
-                        : "-"} */}
-                          en-us
+                          {videoData.videoInfo.snippet.defaultAudioLanguage
+                            ? videoData.videoInfo.snippet.defaultAudioLanguage
+                            : "-"}
                         </span>
                       </div>
                     </Stack>
@@ -138,9 +148,15 @@ export default function VideoPlayer() {
                     sm={{ span: 12 }}
                     className="order-0 mt-1"
                   >
-                    hello hello hello hello hello hello hello hello hello hello
-                    hello hello hello hello hello hello hello hello hello hello
-                    hello hello hello hello
+                    <div></div>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: videoData.videoInfo.snippet.description.replace(
+                          /\n/g,
+                          "<br />"
+                        ),
+                      }}
+                    />
                   </Col>
 
                   <Col
@@ -154,7 +170,11 @@ export default function VideoPlayer() {
                   >
                     <Stack gap={3}>
                       <div className="">
-                        <Link to="/" className="url-purple fs-5">
+                        <Link
+                          to={getYtVideoUrlById(id)}
+                          target="_blank"
+                          className="url-purple fs-5"
+                        >
                           مشاهده در YouTube
                         </Link>
                       </div>
