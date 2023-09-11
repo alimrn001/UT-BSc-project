@@ -8,6 +8,10 @@ function extractVideoIdFromUrl(url) {
   return match ? match[1] : null;
 }
 
+export function getYtVideoUrlById(id) {
+  return `https://youtu.be/${id}`;
+}
+
 export async function videoExists(url) {
   let videoId = url.split("v=")[1];
   if (videoId === undefined) {

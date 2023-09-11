@@ -13,7 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="video" element={<VideoPlayer />} />
+            <Route path="watch/:id" element={<VideoPlayer />} />
+            {/* <Route path="/watch" element={<VideoPlayer />} /> */}
             <Route path="*" element={<Error code={404} />} />
           </Route>
         </Routes>
