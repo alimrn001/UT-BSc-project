@@ -76,3 +76,30 @@ export async function retrieveVideoData(url) {
     throw new Error("Error while fetching video data");
   }
 }
+
+export async function retrieveChannelData(channelId) {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/channels`,
+      {
+        params: {
+          key: YT_API_KEY,
+          id: channelId,
+          part: "snippet,contentDetails,statistics",
+        },
+      }
+    );
+
+    if (response.data.items.length > 0) {
+      const channelInfo = response.data.items[0];
+      return {
+        channelInfo,
+      };
+    } else {
+      throw new Error("Video not found");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Error while fetching video data");
+  }
+}

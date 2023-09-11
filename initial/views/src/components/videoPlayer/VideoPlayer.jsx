@@ -1,4 +1,12 @@
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  Row,
+  Stack,
+} from "react-bootstrap";
 import Error from "../shared/errors/Error";
 import ReactPlayer from "react-player";
 import PageLoading from "../shared/loading/PageLoading";
@@ -18,6 +26,7 @@ import {
   YTUrlIsValid,
   retrieveVideoData,
   getYtVideoUrlById,
+  retrieveChannelData,
 } from "../../utils/youtubeAPI/YTAPI";
 
 import {
@@ -39,6 +48,8 @@ export default function VideoPlayer() {
 
   const [videoData, setVideoData] = useState({});
 
+  const [channelData, setChannelData] = useState({});
+
   const handleSubtitleDownloadRequest = () => {
     setShowNoSubtitleModal(true);
   };
@@ -46,7 +57,20 @@ export default function VideoPlayer() {
   useEffect(() => {
     console.log(id + " is id");
     getVideoData();
+    // console.log("testing : " + videoData.videoInfo.id);
   }, []);
+
+  const getChannelData = async (channelId) => {
+    try {
+      const response = await retrieveChannelData(channelId);
+      setChannelData(response);
+      console.log("this is channel data");
+      console.log(response);
+      // Do something with the channel data, e.g., set it in state
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const getVideoData = async () => {
     try {
@@ -58,6 +82,9 @@ export default function VideoPlayer() {
         const videoData = await retrieveVideoData(getYtVideoUrlById(id));
         console.log(videoData);
         setVideoData(videoData);
+        if (videoData.videoInfo.snippet.channelId) {
+          await getChannelData(videoData.videoInfo.snippet.channelId);
+        }
       }
     } catch (error) {
       console.error("Error:", error);
@@ -81,7 +108,7 @@ export default function VideoPlayer() {
               <div className="ltr text-1 mt-1">
                 <h1>{videoData.videoInfo.snippet.title}</h1>
               </div>
-              <Container dir="ltr">
+              <div dir="ltr">
                 <Row>
                   <Col
                     xxl={{ span: 2, order: 0 }}
@@ -89,7 +116,7 @@ export default function VideoPlayer() {
                     lg={{ span: 3, order: 0 }}
                     md={{ span: 6, order: 1 }}
                     sm={{ span: 12 }}
-                    className="order-1 mt-1"
+                    className="order-1 mt-3"
                   >
                     <Stack gap={3}>
                       <div className="d-flex align-items-center">
@@ -146,10 +173,34 @@ export default function VideoPlayer() {
                     lg={{ span: 6, order: 1 }}
                     md={{ span: 12, order: 0 }}
                     sm={{ span: 12 }}
-                    className="order-0 mt-1"
+                    className="order-0 mt-3"
                   >
-                    <div></div>
+                    <div className="d-flex align-items-center">
+                      <Image
+                        src={
+                          channelData.channelInfo.snippet.thumbnails.default.url
+                        }
+                        height={50}
+                        roundedCircle
+                      />
+                      <h4 className="ps-3">
+                        {videoData.videoInfo.snippet.channelTitle}
+                      </h4>
+                    </div>
+                    {!channelData.channelInfo.statistics
+                      .hiddenSubscriberCount && (
+                      <h5 className="mt-2">
+                        (
+                        {parseInt(
+                          channelData.channelInfo.statistics.subscriberCount
+                        ).toLocaleString("en-US")}{" "}
+                        subscribers)
+                      </h5>
+                    )}
+                    <h4>Description: </h4>
                     <div
+                      className="mt-3"
+                      style={{ wordBreak: "break-all" }}
                       dangerouslySetInnerHTML={{
                         __html: videoData.videoInfo.snippet.description.replace(
                           /\n/g,
@@ -166,7 +217,7 @@ export default function VideoPlayer() {
                     lg={{ span: 3, order: 2 }}
                     md={{ span: 6, order: 2 }}
                     sm={{ span: 12 }}
-                    className="order-2 mt-1"
+                    className="order-2 mt-3"
                   >
                     <Stack gap={3}>
                       <div className="">
@@ -218,7 +269,7 @@ export default function VideoPlayer() {
                     </Stack>
                   </Col>
                 </Row>
-              </Container>
+              </div>
             </div>
           </div>
           {
