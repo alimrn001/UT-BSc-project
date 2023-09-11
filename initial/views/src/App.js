@@ -4,6 +4,7 @@ import "./App.css";
 import Layout from "./components/Layout";
 import Home from "./components/home/Home";
 import VideoPlayer from "./components/videoPlayer/VideoPlayer";
+import Error from "./components/shared/errors/Error";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="video" element={<VideoPlayer />} />
+            <Route path="*" element={<Error code={404} />} />
           </Route>
         </Routes>
       </Router>
