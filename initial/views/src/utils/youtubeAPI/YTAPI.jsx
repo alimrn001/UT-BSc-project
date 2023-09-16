@@ -103,3 +103,11 @@ export async function retrieveChannelData(channelId) {
     throw new Error("Error while fetching video data");
   }
 }
+
+export async function retrieveVideoQualities(id) {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${YT_API_KEY}&part=streamingDetails`
+    );
+  } catch (error) {}
+}

@@ -33,6 +33,8 @@ export default function VideoInfoModal({ videoData, showP }) {
         className="rtl video-info-modal p-0 m-0"
         show={show}
         onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
       >
         <Modal.Header className="video-info-modal-header bg-1 text-1">
           <div className="custom-close-button" onClick={handleClose}>

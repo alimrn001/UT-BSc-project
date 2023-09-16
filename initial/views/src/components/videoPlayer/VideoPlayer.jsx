@@ -28,6 +28,7 @@ import {
   getYtVideoUrlById,
   retrieveChannelData,
 } from "../../utils/youtubeAPI/YTAPI";
+import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
 
 import {
   convertYouTubeDurationToMinutes,
@@ -50,15 +51,11 @@ export default function VideoPlayer() {
 
   const [channelData, setChannelData] = useState({});
 
+  const [videoBlob, setVideoBlob] = useState(null);
+
   const handleSubtitleDownloadRequest = () => {
     setShowNoSubtitleModal(true);
   };
-
-  useEffect(() => {
-    console.log(id + " is id");
-    getVideoData();
-    // console.log("testing : " + videoData.videoInfo.id);
-  }, []);
 
   const getChannelData = async (channelId) => {
     try {
@@ -93,6 +90,24 @@ export default function VideoPlayer() {
     }
   };
 
+  const fetchVideoContent = async () => {
+    try {
+      const vBlob = await fetchYTVideo(getYtVideoUrlById(id));
+      setVideoBlob(vBlob);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      console.log("done");
+    }
+  };
+
+  useEffect(() => {
+    console.log(id + " is id");
+    getVideoData();
+    // fetchVideoContent();
+    // console.log("testing : " + videoData.videoInfo.id);
+  }, []);
+
   return (
     <>
       {!isLoading && urlIsValid && (
@@ -100,9 +115,12 @@ export default function VideoPlayer() {
           <div className="video-container mb-5">
             <div className="d-flex justify-content-center mt-3">
               <video className="yt-video w-100" controls>
-                <source src="https://www.aparat.com/v/EaQbL" type="text/html" />
+                <source type="text/html" />
                 Your browser does not support the video tag.
               </video>
+              {/* {videoBlob && (
+                <video controls src={URL.createObjectURL(videoBlob)}></video>
+              )} */}
             </div>
             <div>
               <div className="ltr text-1 mt-1">
@@ -118,7 +136,7 @@ export default function VideoPlayer() {
                     sm={{ span: 12 }}
                     className="order-1 mt-3"
                   >
-                    <Stack gap={3}>
+                    <Stack>
                       <div className="d-flex align-items-center">
                         <BsEye style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
@@ -128,7 +146,7 @@ export default function VideoPlayer() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center mt-3">
                         <BsHandThumbsUp style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {parseInt(
@@ -137,7 +155,7 @@ export default function VideoPlayer() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center mt-3">
                         <BsCalendarDate style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {new Date(
@@ -146,7 +164,7 @@ export default function VideoPlayer() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center mt-3">
                         <BsClock style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {convertYouTubeDurationToMinutes(
@@ -156,7 +174,7 @@ export default function VideoPlayer() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center mt-3">
                         <BsTranslate style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {videoData.videoInfo.snippet.defaultAudioLanguage
@@ -219,7 +237,7 @@ export default function VideoPlayer() {
                     sm={{ span: 12 }}
                     className="order-2 mt-3"
                   >
-                    <Stack gap={3}>
+                    <Stack>
                       <div className="">
                         <Link
                           to={getYtVideoUrlById(id)}
@@ -230,7 +248,7 @@ export default function VideoPlayer() {
                         </Link>
                       </div>
 
-                      <div className="fs-5">
+                      <div className="fs-5 mt-3">
                         <Button
                           className="btn-purple btn-no-bs w-100"
                           onClick={handleSubtitleDownloadRequest}
@@ -239,9 +257,9 @@ export default function VideoPlayer() {
                         </Button>
                       </div>
 
-                      <div className="fs-4">دانلود ویدیو</div>
+                      <div className="fs-4 mt-3">دانلود ویدیو</div>
 
-                      <div className="ltr">
+                      <div className="ltr mt-3">
                         <Form.Select
                           className="bg-1 text-1 btn-no-bs select-form-purple"
                           aria-label="Default select example"
@@ -261,7 +279,7 @@ export default function VideoPlayer() {
                         </Form.Select>
                       </div>
 
-                      <div>
+                      <div className="mt-3">
                         <Button className="btn-pink btn-no-bs w-100">
                           دانلود
                         </Button>

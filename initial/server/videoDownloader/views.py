@@ -1,21 +1,34 @@
-import requests
+import os
 import io
-from django.http import FileResponse, HttpResponseNotFound
+import requests
+from django.http import FileResponse, HttpResponseNotFound, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from pytube import YouTube
 
-def video_view(request):
-    # Define the URL to your video
-    video_url = 'https://images.ecokowsar.net/bazar/1691327746158.jpg'
+@csrf_exempt
+def download_youtube_video(request):
+    if request.method == 'GET':
+        try:
+            # Get the YouTube video URL from the request
+            print('here')
+            # video_url = request.POST.get('video_url')
+            video_url = 'https://www.youtube.com/watch?v=XenVUbjNswA'
+            # Create a YouTube object and download the video
+            yt = YouTube(video_url)
+            stream = yt.streams.get_highest_resolution()
+            video_bytes = stream.stream_to_buffer()
 
-    try:
-        # Fetch the video content from the URL
-        response = requests.get(video_url)
-        response.raise_for_status()  # Raise an exception if the request fails
+            # Create a BytesIO object to hold the video content
+            video_io = io.BytesIO(video_bytes)
 
-        # Serve the video content as a FileResponse
-        video_content = response.content
-        return FileResponse(io.BytesIO(video_content))
+            # Serve the video content as a FileResponse
+            response = FileResponse(video_io, content_type='video/mp4')
+            response['Content-Disposition'] = f'attachment; filename="{yt.title}.mp4"'
 
-    except requests.exceptions.RequestException as e:
-        # Handle any exceptions (e.g., request failure or invalid URL)
-        print(f"Error fetching video: {str(e)}")
-        return HttpResponseNotFound("Video not found")
+            return response
+        except Exception as e:
+            # Handle any exceptions (e.g., video download failure)
+            print(f"Error downloading video: {str(e)}")
+            return JsonResponse({'error': 'Video download failed'})
+
+    return HttpResponseNotFound("Video not found")
