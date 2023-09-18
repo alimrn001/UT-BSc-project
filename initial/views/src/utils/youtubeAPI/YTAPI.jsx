@@ -44,10 +44,6 @@ export async function YTUrlIsValid(url) {
 }
 
 export async function retrieveVideoData(videoId) {
-  // let videoId = url.split("v=")[1];
-  // if (videoId === undefined) {
-  //   videoId = extractVideoIdFromUrl(url);
-  // }
   try {
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?key=${YT_API_KEY}&part=snippet,localizations,contentDetails,statistics&id=${videoId}`
@@ -100,23 +96,26 @@ export async function retrieveChannelData(channelId) {
     }
   } catch (error) {
     console.error("Error:", error);
-    throw new Error("Error while fetching video data");
+    throw new Error("Error while fetching channel data");
+  }
+}
+
+export async function retrieveCaptionsData(videoId) {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=${videoId}&key=${YT_API_KEY}`
+    );
+    const captionsInfo = response.data.items;
+    // console.log("captions : ");
+    // console.log(response.data.items);
+    return {
+      captionsInfo,
+    };
+  } catch (error) {
+    console.error("Error:", error);
   }
 }
 
 export async function retrieveVideoQualities(videoId) {
-  //has bug!!
-  // try {
-  //   const response = await axios.get(
-  //     `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${YT_API_KEY}&part=streamingDetails`
-  //   );
-  //   if (response.data.items.length > 0) {
-  //     return { response };
-  //   } else {
-  //     throw new Error("Video Not Found");
-  //   }
-  // } catch (error) {
-  //   console.error("Error: ", error);
-  //   throw new Error("Error while fetching video qualities");
-  // }
+  // must be get from server and pytube!!
 }

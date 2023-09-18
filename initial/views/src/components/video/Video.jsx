@@ -26,6 +26,7 @@ import {
   getYtVideoUrlById,
   retrieveChannelData,
   retrieveVideoQualities,
+  retrieveCaptionsData,
 } from "../../utils/youtubeAPI/YTAPI";
 // import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
 
@@ -47,6 +48,8 @@ export default function Video() {
   const [urlIsValid, setUrlIsValid] = useState(false);
 
   const [videoData, setVideoData] = useState({});
+
+  const [captionsData, setCaptionsData] = useState([]);
 
   const [videoQualities, setVideoQualities] = useState({});
 
@@ -70,30 +73,31 @@ export default function Video() {
 
   const getVideoData = async () => {
     try {
-      // setIsLoading(true);
-      // const result = await YTUrlIsValid(getYtVideoUrlById(id));
-      // console.log("result is : " + result);
-      // setUrlIsValid(result);
-      // if (result) {
       const videoData = await retrieveVideoData(id);
       console.log(videoData);
       setVideoData(videoData);
       if (videoData.videoInfo.snippet.channelId) {
         await getChannelData(videoData.videoInfo.snippet.channelId);
       }
-      // }
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      // setIsLoading(false);
+    }
+  };
+
+  const getVideoCaptions = async () => {
+    try {
+      const captionsInfo = await retrieveCaptionsData(id);
+      setCaptionsData(captionsInfo.captionsInfo);
+    } catch (error) {
+      console.log("error:", error);
+    } finally {
     }
   };
 
   const getVideoQualities = async () => {
     try {
       const qualitiesData = await retrieveVideoQualities(id);
-      // console.log(qualitiesData);
-      // setVideoQualities(qualitiesData);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -108,10 +112,9 @@ export default function Video() {
       setUrlIsValid(result);
       if (result) {
         await getVideoData();
+        await getVideoCaptions();
       }
       setIsLoading(false);
-      // fetchVideoContent();
-      // console.log("testing : " + videoData.videoInfo.id);
     })();
   }, []);
 
@@ -144,7 +147,7 @@ export default function Video() {
                     className="order-1 mt-3"
                   >
                     <Stack>
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center flex-wrap">
                         <BsEye style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {parseInt(
@@ -153,7 +156,7 @@ export default function Video() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center mt-3">
+                      <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsHandThumbsUp style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {parseInt(
@@ -162,7 +165,7 @@ export default function Video() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center mt-3">
+                      <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsCalendarDate style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {new Date(
@@ -171,7 +174,7 @@ export default function Video() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center mt-3">
+                      <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsClock style={{ height: 20, width: 20 }} />
                         <span className="video-info-item ps-2">
                           {convertYouTubeDurationToMinutes(
@@ -181,13 +184,14 @@ export default function Video() {
                         </span>
                       </div>
 
-                      <div className="d-flex align-items-center mt-3">
+                      <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsTranslate style={{ height: 20, width: 20 }} />
-                        <span className="video-info-item ps-2">
-                          {videoData.videoInfo.snippet.defaultAudioLanguage
-                            ? videoData.videoInfo.snippet.defaultAudioLanguage
-                            : "-"}
-                        </span>
+                        {captionsData.map((caption, idx) => (
+                          <span className="video-info-item ps-2">
+                            {caption.snippet.language}
+                            {idx !== captionsData.length - 1 && ","}
+                          </span>
+                        ))}
                       </div>
                     </Stack>
                   </Col>

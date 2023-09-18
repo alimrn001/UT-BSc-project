@@ -17,7 +17,7 @@ import {
 } from "../../utils/dateTime/DateTimeConverter";
 import { getYtVideoUrlById } from "../../utils/youtubeAPI/YTAPI";
 
-export default function VideoInfoModal({ videoData, showP }) {
+export default function VideoInfoModal({ videoData, showP, captionsData }) {
   const [show, setShow] = useState(showP);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -57,14 +57,14 @@ export default function VideoInfoModal({ videoData, showP }) {
             <Card.Body className="bg-1 text-1">
               <Card.Title>{videoData.videoInfo.snippet.title}</Card.Title>
               <Card.Text>
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center flex-wrap">
                   <BsTv style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
                     {videoData.videoInfo.snippet.channelTitle}
                   </span>
                 </div>
 
-                <div className="d-flex align-items-center mt-3">
+                <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsEye style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
                     {parseInt(videoData.statistics.viewCount).toLocaleString(
@@ -73,7 +73,7 @@ export default function VideoInfoModal({ videoData, showP }) {
                   </span>
                 </div>
 
-                <div className="d-flex align-items-center mt-3">
+                <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsHandThumbsUp style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
                     {parseInt(videoData.statistics.likeCount).toLocaleString(
@@ -82,7 +82,7 @@ export default function VideoInfoModal({ videoData, showP }) {
                   </span>
                 </div>
 
-                <div className="d-flex align-items-center mt-3">
+                <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsCalendarDate style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
                     {new Date(
@@ -91,7 +91,7 @@ export default function VideoInfoModal({ videoData, showP }) {
                   </span>
                 </div>
 
-                <div className="d-flex align-items-center mt-3">
+                <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsClock style={{ height: 20, width: 20 }} />
                   <span className="video-info-item ps-3">
                     {convertYouTubeDurationToMinutes(
@@ -101,13 +101,14 @@ export default function VideoInfoModal({ videoData, showP }) {
                   </span>
                 </div>
 
-                <div className="d-flex align-items-center mt-3">
+                <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsTranslate style={{ height: 20, width: 20 }} />
-                  <span className="video-info-item ps-3">
-                    {videoData.videoInfo.snippet.defaultAudioLanguage
-                      ? videoData.videoInfo.snippet.defaultAudioLanguage
-                      : "-"}
-                  </span>
+                  {captionsData.map((caption, idx) => (
+                    <span className="video-info-item ps-2">
+                      {caption.snippet.language}
+                      {idx !== captionsData.length - 1 && ","}
+                    </span>
+                  ))}
                 </div>
               </Card.Text>
               {/* <Button variant="primary">Go somewhere</Button> */}

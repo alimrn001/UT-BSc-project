@@ -5,6 +5,7 @@ import {
   YTUrlIsValid,
   retrieveVideoData,
   extractVideoIdFromUrl,
+  retrieveCaptionsData,
 } from "../../utils/youtubeAPI/YTAPI";
 import VideoInfoModal from "../modal/VideoInfoModal";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
@@ -15,6 +16,7 @@ export default function Home() {
   const [urlIsRequested, setUrlIsRequested] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [modalVideoData, setModalVideoData] = useState(null);
+  const [modalVideoCaptions, setModalVideoCaptions] = useState(null);
   const [showVideoDataModal, setShowVideoDataModal] = useState(false);
 
   const handleVideoUrlChange = (event) => {
@@ -37,7 +39,11 @@ export default function Home() {
         const videoData = await retrieveVideoData(
           extractVideoIdFromUrl(videoUrl)
         );
+        const captionsData = await retrieveCaptionsData(
+          extractVideoIdFromUrl(videoUrl)
+        );
         setModalVideoData(videoData);
+        setModalVideoCaptions(captionsData.captionsInfo);
         setShowVideoDataModal(true);
         console.log(videoData);
       }
@@ -103,7 +109,11 @@ export default function Home() {
       </div>
 
       {showVideoDataModal && (
-        <VideoInfoModal showP={true} videoData={modalVideoData} />
+        <VideoInfoModal
+          showP={true}
+          videoData={modalVideoData}
+          captionsData={modalVideoCaptions}
+        />
       )}
     </div>
   );
