@@ -26,6 +26,7 @@ export function getLanguageTranslationByCode(languageCode) {
   if (languageCode === "dv") return "دیوهی";
   if (languageCode === "nl") return "هلندی";
   if (languageCode === "en") return "انگلیسی";
+  if (languageCode === "en-GB") return "انگلیسی(بریتانیا)";
   if (languageCode === "eo") return "اسپرانتو";
   if (languageCode === "et") return "استونیایی";
   if (languageCode === "ee") return "اوه‌ای";
@@ -124,6 +125,6 @@ export function getLanguageTranslationByCode(languageCode) {
   if (languageCode === "yi") return "یدیش";
   if (languageCode === "yo") return "یوروبا";
   if (languageCode === "zu") return "زولو";
-
+  if (languageCode === "zh") return "چینی";
   return languageCode;
 }

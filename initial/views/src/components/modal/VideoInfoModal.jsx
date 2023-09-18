@@ -6,14 +6,11 @@ import {
   BsTv,
   BsEye,
   BsHandThumbsUp,
-  BsTranslate,
+  BsCcSquare,
   BsCalendarDate,
   BsClock,
 } from "react-icons/bs";
-import {
-  convertYouTubeDurationToMinutes,
-  convertYouTubeDateToString,
-} from "../../utils/dateTime/DateTimeConverter";
+import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 
 export default function VideoInfoModal({ videoData, showP, captionsData }) {
   const [show, setShow] = useState(showP);
@@ -100,7 +97,7 @@ export default function VideoInfoModal({ videoData, showP, captionsData }) {
                 </div>
 
                 <div className="d-flex align-items-center mt-3 flex-wrap">
-                  <BsTranslate style={{ height: 20, width: 20 }} />
+                  <BsCcSquare style={{ height: 20, width: 20 }} />
                   {captionsData.map((caption, idx) => (
                     <span className="video-info-item ps-2">
                       {caption.snippet.language}

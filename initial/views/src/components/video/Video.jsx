@@ -13,7 +13,7 @@ import PageLoading from "../shared/loading/PageLoading";
 import {
   BsEye,
   BsHandThumbsUp,
-  BsTranslate,
+  BsCcSquare,
   BsCalendarDate,
   BsClock,
 } from "react-icons/bs";
@@ -198,7 +198,7 @@ export default function Video() {
                       </div>
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
-                        <BsTranslate style={{ height: 20, width: 20 }} />
+                        <BsCcSquare style={{ height: 20, width: 20 }} />
                         {captionsData.map((caption, idx) => (
                           <span className="video-info-item ps-2">
                             {caption.snippet.language}
