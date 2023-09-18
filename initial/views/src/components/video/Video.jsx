@@ -11,8 +11,6 @@ import Error from "../shared/errors/Error";
 import ReactPlayer from "react-player";
 import PageLoading from "../shared/loading/PageLoading";
 import {
-  BsXLg,
-  BsTv,
   BsEye,
   BsHandThumbsUp,
   BsTranslate,
@@ -27,15 +25,16 @@ import {
   retrieveVideoData,
   getYtVideoUrlById,
   retrieveChannelData,
+  retrieveVideoQualities,
 } from "../../utils/youtubeAPI/YTAPI";
-import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
+// import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
 
 import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
 
-export default function VideoPlayer() {
+export default function Video() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   // const id = searchParams.get("v");
@@ -49,9 +48,9 @@ export default function VideoPlayer() {
 
   const [videoData, setVideoData] = useState({});
 
-  const [channelData, setChannelData] = useState({});
+  const [videoQualities, setVideoQualities] = useState({});
 
-  const [videoBlob, setVideoBlob] = useState(null);
+  const [channelData, setChannelData] = useState({});
 
   const handleSubtitleDownloadRequest = () => {
     setShowNoSubtitleModal(true);
@@ -71,41 +70,49 @@ export default function VideoPlayer() {
 
   const getVideoData = async () => {
     try {
-      setIsLoading(true);
-      const result = await YTUrlIsValid(getYtVideoUrlById(id));
-      console.log("result is : " + result);
-      setUrlIsValid(result);
-      if (result) {
-        const videoData = await retrieveVideoData(getYtVideoUrlById(id));
-        console.log(videoData);
-        setVideoData(videoData);
-        if (videoData.videoInfo.snippet.channelId) {
-          await getChannelData(videoData.videoInfo.snippet.channelId);
-        }
+      // setIsLoading(true);
+      // const result = await YTUrlIsValid(getYtVideoUrlById(id));
+      // console.log("result is : " + result);
+      // setUrlIsValid(result);
+      // if (result) {
+      const videoData = await retrieveVideoData(id);
+      console.log(videoData);
+      setVideoData(videoData);
+      if (videoData.videoInfo.snippet.channelId) {
+        await getChannelData(videoData.videoInfo.snippet.channelId);
       }
+      // }
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
-  const fetchVideoContent = async () => {
+  const getVideoQualities = async () => {
     try {
-      const vBlob = await fetchYTVideo(getYtVideoUrlById(id));
-      setVideoBlob(vBlob);
+      const qualitiesData = await retrieveVideoQualities(id);
+      // console.log(qualitiesData);
+      // setVideoQualities(qualitiesData);
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      console.log("done");
+      console.log("after loading");
     }
   };
 
   useEffect(() => {
-    console.log(id + " is id");
-    getVideoData();
-    // fetchVideoContent();
-    // console.log("testing : " + videoData.videoInfo.id);
+    (async () => {
+      setIsLoading(true);
+      const result = await YTUrlIsValid(getYtVideoUrlById(id));
+      setUrlIsValid(result);
+      if (result) {
+        await getVideoData();
+      }
+      setIsLoading(false);
+      // fetchVideoContent();
+      // console.log("testing : " + videoData.videoInfo.id);
+    })();
   }, []);
 
   return (

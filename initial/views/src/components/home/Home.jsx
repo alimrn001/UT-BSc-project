@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BsInfoCircle } from "react-icons/bs";
-import { YTUrlIsValid, retrieveVideoData } from "../../utils/youtubeAPI/YTAPI";
+import {
+  YTUrlIsValid,
+  retrieveVideoData,
+  extractVideoIdFromUrl,
+} from "../../utils/youtubeAPI/YTAPI";
 import VideoInfoModal from "../modal/VideoInfoModal";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 
@@ -29,7 +33,10 @@ export default function Home() {
       console.log("result is : " + result);
       setUrlIsValid(result);
       if (result) {
-        const videoData = await retrieveVideoData(videoUrl);
+        console.log("id is : " + extractVideoIdFromUrl(videoUrl));
+        const videoData = await retrieveVideoData(
+          extractVideoIdFromUrl(videoUrl)
+        );
         setModalVideoData(videoData);
         setShowVideoDataModal(true);
         console.log(videoData);
