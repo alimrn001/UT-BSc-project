@@ -34,6 +34,7 @@ import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
+import DownloadSubtitleModal from "../modal/DownloadSubtitleModal";
 
 export default function Video() {
   const location = useLocation();
@@ -42,6 +43,10 @@ export default function Video() {
   const { id } = useParams();
 
   const [showNoSubtitleModal, setShowNoSubtitleModal] = useState(false);
+
+  const [showDownloadSubtitleModal, setShowDownloadSubtitleModal] = useState(
+    false
+  );
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,7 +61,8 @@ export default function Video() {
   const [channelData, setChannelData] = useState({});
 
   const handleSubtitleDownloadRequest = () => {
-    setShowNoSubtitleModal(true);
+    if (captionsData.length === 0) setShowNoSubtitleModal(true);
+    else setShowDownloadSubtitleModal(true);
   };
 
   const getChannelData = async (channelId) => {
@@ -114,6 +120,7 @@ export default function Video() {
         await getVideoData();
         await getVideoCaptions();
       }
+      console.log(captionsData);
       setIsLoading(false);
     })();
   }, []);
@@ -305,6 +312,13 @@ export default function Video() {
             <NoSubtitleToGetModal
               onShow={setShowNoSubtitleModal}
               showP={showNoSubtitleModal}
+            />
+          }
+          {
+            <DownloadSubtitleModal
+              onShow={setShowDownloadSubtitleModal}
+              showP={showDownloadSubtitleModal}
+              captionsData={captionsData}
             />
           }
         </div>

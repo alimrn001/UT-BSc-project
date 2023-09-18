@@ -10,6 +10,7 @@ import "./styles/home.css";
 import "./styles/videoInfoModal.css";
 import "./styles/videoPlayer.css";
 import "./styles/errors.css";
+import "./styles/downloadSubtitleModal.css";
 // import "normalize.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";

@@ -13,6 +13,7 @@ export default function NoSubtitleToGetModal({ showP, onShow }) {
   useEffect(() => {
     setShow(showP);
   }, [showP]);
+
   return (
     <>
       <Modal dir="rtl" show={show} onHide={handleClose}>

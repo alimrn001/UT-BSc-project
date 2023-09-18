@@ -1,0 +1,37 @@
+export function getLanguageTranslationByCode(languageCode) {
+  if (languageCode === "en") return "انگلیسی";
+  if (languageCode === "fa") return "فارسی";
+  if (languageCode === "fr") return "فرانسوی";
+  if (languageCode === "de") return "آلمانی";
+  if (languageCode === "ga") return "ایرلندی";
+  if (languageCode === "pt") return "پرتغالی";
+  if (languageCode === "hy") return "ارمنی";
+  if (languageCode === "en-GB") return "انگلیسی(بریتانیا)";
+  if (languageCode === "ru") return "روسی";
+  if (languageCode === "it") return "ایتالیایی";
+  if (languageCode === "pl") return "لهستانی";
+  if (languageCode === "hi") return "هندی";
+  if (languageCode === "cs") return "چک";
+  if (languageCode === "es") return "اسپانیایی";
+  if (languageCode === "ro") return "رومانی";
+  if (languageCode === "id") return "اندونزی";
+  if (languageCode === "ar") return "عربی";
+  if (languageCode === "cy") return "ولز";
+  if (languageCode === "el") return "یونانی";
+  if (languageCode === "da") return "دانمارکی";
+  if (languageCode === "ja") return "ژاپنی";
+  if (languageCode === "nl") return "هلندی";
+  if (languageCode === "lv") return "لاتویا";
+  if (languageCode === "lt") return "لیتوانی";
+  if (languageCode === "ms") return "مالای";
+  if (languageCode === "nn") return "نروژی";
+  if (languageCode === "sk") return "اسلواک";
+  if (languageCode === "sq") return "آلبانی";
+  if (languageCode === "sr") return "صرب";
+  if (languageCode === "sv") return "سوئدی";
+  if (languageCode === "tg") return "تاجیک";
+  if (languageCode === "tr") return "ترکی";
+  if (languageCode === "zh") return "چینی";
+  if (languageCode === "et") return "استونی";
+  return languageCode;
+}

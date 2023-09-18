@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Modal, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {
   BsXLg,
   BsTv,
@@ -9,13 +10,10 @@ import {
   BsCalendarDate,
   BsClock,
 } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
-
 import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
-import { getYtVideoUrlById } from "../../utils/youtubeAPI/YTAPI";
 
 export default function VideoInfoModal({ videoData, showP, captionsData }) {
   const [show, setShow] = useState(showP);
