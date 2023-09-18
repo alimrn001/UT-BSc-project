@@ -3,7 +3,12 @@ import { Button, Modal, Stack } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
 import { getLanguageTranslationByCode } from "../../utils/translation/Translation";
 
-export default function DownloadSubtitleModal({ showP, onShow, captionsData }) {
+export default function DownloadSubtitleModal({
+  showP,
+  onShow,
+  captionsData,
+  onDownloadRequest,
+}) {
   const [show, setShow] = useState(showP);
 
   const handleClose = () => {
@@ -14,6 +19,14 @@ export default function DownloadSubtitleModal({ showP, onShow, captionsData }) {
   useEffect(() => {
     setShow(showP);
   }, [showP]);
+
+  const handleFaraSubDownload = () => {
+    onDownloadRequest(0);
+  };
+
+  const handleYTSubDownload = (id) => {
+    onDownloadRequest(id);
+  };
 
   return (
     <>
@@ -38,7 +51,10 @@ export default function DownloadSubtitleModal({ showP, onShow, captionsData }) {
                 <h5>فارسی (ترجمه فرازین)</h5>
               </div>
               <div>
-                <Button className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1">
+                <Button
+                  className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
+                  onClick={handleFaraSubDownload}
+                >
                   دانلود
                 </Button>
               </div>
@@ -53,7 +69,10 @@ export default function DownloadSubtitleModal({ showP, onShow, captionsData }) {
                   </h5>
                 </div>
                 <div>
-                  <Button className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1">
+                  <Button
+                    className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
+                    onClick={() => handleYTSubDownload(caption.id)}
+                  >
                     دانلود
                   </Button>
                 </div>

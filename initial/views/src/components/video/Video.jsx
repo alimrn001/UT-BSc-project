@@ -27,6 +27,7 @@ import {
   retrieveChannelData,
   retrieveVideoQualities,
   retrieveCaptionsData,
+  downloadSubtitle,
 } from "../../utils/youtubeAPI/YTAPI";
 // import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
 
@@ -63,6 +64,11 @@ export default function Video() {
   const handleSubtitleDownloadRequest = () => {
     if (captionsData.length === 0) setShowNoSubtitleModal(true);
     else setShowDownloadSubtitleModal(true);
+  };
+
+  const initializeSubtitleDownload = (subtitleId) => {
+    console.log("downloading " + subtitleId);
+    downloadSubtitle(subtitleId);
   };
 
   const getChannelData = async (channelId) => {
@@ -271,7 +277,7 @@ export default function Video() {
                           className="btn-purple btn-no-bs w-100"
                           onClick={handleSubtitleDownloadRequest}
                         >
-                          دانلود زیرنویس فارسی
+                          دانلود زیرنویس
                         </Button>
                       </div>
 
@@ -299,7 +305,7 @@ export default function Video() {
 
                       <div className="mt-3">
                         <Button className="btn-pink btn-no-bs w-100">
-                          دانلود
+                          دانلود ویدیو
                         </Button>
                       </div>
                     </Stack>
@@ -319,6 +325,7 @@ export default function Video() {
               onShow={setShowDownloadSubtitleModal}
               showP={showDownloadSubtitleModal}
               captionsData={captionsData}
+              onDownloadRequest={initializeSubtitleDownload}
             />
           }
         </div>

@@ -3,7 +3,6 @@ import axios from "axios";
 const YT_API_KEY = "AIzaSyCYvQwzy8PB9dcLwjC9ohf3QFgXU_hnMvM";
 
 export function extractVideoIdFromUrl(url) {
-  // Extract the video ID using a regular expression
   const match = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
   return match ? match[1] : url.split("v=")[1];
 }
@@ -106,13 +105,33 @@ export async function retrieveCaptionsData(videoId) {
       `https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId=${videoId}&key=${YT_API_KEY}`
     );
     const captionsInfo = response.data.items;
-    // console.log("captions : ");
-    // console.log(response.data.items);
     return {
       captionsInfo,
     };
   } catch (error) {
     console.error("Error:", error);
+  }
+}
+
+export async function downloadSubtitle(captionId) {
+  try {
+    const captionResponse = await axios.get(
+      `https://www.googleapis.com/youtube/v3/captions/${captionId}?key=${YT_API_KEY}`,
+      {
+        responseType: "blob", // Ensure response is treated as binary data
+      }
+    );
+    const blob = new Blob([captionResponse.data], { type: "text/srt" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "captions.srt";
+    a.click();
+
+    // Clean up
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error", error);
   }
 }
 
