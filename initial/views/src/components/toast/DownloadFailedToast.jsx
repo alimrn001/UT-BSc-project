@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ToastContainer } from "react-bootstrap";
+import { Button, CloseButton, ToastContainer } from "react-bootstrap";
+import { BsXLg } from "react-icons/bs";
 import Toast from "react-bootstrap/Toast";
 
 export default function DownloadFailedToast({ showT, onShow }) {
@@ -16,20 +17,22 @@ export default function DownloadFailedToast({ showT, onShow }) {
 
   return (
     <>
-      <ToastContainer
-        className="p-3 ltr"
-        // position={"bottom-center"}
-        // style={{ zIndex: 15000 }}
-      >
+      <ToastContainer className="p-3 ltr">
         <Toast
           onClose={handleClose}
           show={show}
-          delay={10000}
-          className="border-danger border-2"
+          delay={3000}
+          autohide
+          className="toast-body-container border-2"
         >
-          <Toast.Header className="text-1 bg-danger border-danger border-2"></Toast.Header>
-          <Toast.Body className="rtl bg-1">
-            <h5>خطا در برقراری ارتباط!</h5>
+          <Toast.Body className="rtl bg-alert text-alert d-flex align-items-center justify-content-between">
+            <h5 className="mb-0">خطا در برقراری ارتباط!</h5>
+            <Button
+              onClick={handleClose}
+              className="bg-alert text-alert border-0 btn-no-bs"
+            >
+              <BsXLg />
+            </Button>
           </Toast.Body>
         </Toast>
       </ToastContainer>

@@ -30,7 +30,7 @@ export default function DownloadSubtitleModal({
 
   return (
     <>
-      <Modal dir="rtl" show={show} onHide={handleClose} className="test-modal">
+      <Modal dir="rtl" show={show} onHide={handleClose}>
         <Modal.Header className="video-info-modal-header bg-1 text-1">
           <div className="custom-close-button" onClick={handleClose}>
             <Button className="btn btn-modal-close btn-no-bs d-flex align-items-center bg-1">
@@ -48,7 +48,7 @@ export default function DownloadSubtitleModal({
               className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3`}
             >
               <div>
-                <h5>فارسی (ترجمه فرازین)</h5>
+                <h5 className="mb-0">فارسی (ترجمه فرازین)</h5>
               </div>
               <div>
                 <Button
@@ -64,7 +64,7 @@ export default function DownloadSubtitleModal({
                 className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3 sub-language-container`}
               >
                 <div>
-                  <h5>
+                  <h5 className="mb-0">
                     {getLanguageTranslationByCode(caption.snippet.language)}
                   </h5>
                 </div>

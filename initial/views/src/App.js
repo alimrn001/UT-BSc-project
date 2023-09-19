@@ -6,6 +6,12 @@ import Home from "./components/home/Home";
 import VideoPlayer from "./components/video/Video";
 import Error from "./components/shared/errors/Error";
 
+const fontLink = document.createElement("link");
+fontLink.href =
+  "https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css";
+fontLink.rel = "stylesheet";
+document.head.appendChild(fontLink);
+
 function App() {
   return (
     <div className="App">
