@@ -66,9 +66,11 @@ export default function Video() {
     else setShowDownloadSubtitleModal(true);
   };
 
-  const initializeSubtitleDownload = (subtitleId) => {
-    console.log("downloading " + subtitleId);
-    downloadSubtitle(subtitleId);
+  const initializeSubtitleDownload = (subtitleInfo) => {
+    console.log(
+      "downloading " + subtitleInfo.id + " " + subtitleInfo.languageCode
+    );
+    downloadSubtitle(subtitleInfo);
   };
 
   const getChannelData = async (channelId) => {

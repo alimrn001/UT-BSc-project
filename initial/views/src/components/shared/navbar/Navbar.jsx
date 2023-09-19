@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar bg-1 justify-content-between">
-      <div className="container-fluid">
+      <div className="container-fluid navbar-container">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img
             src={Logo}

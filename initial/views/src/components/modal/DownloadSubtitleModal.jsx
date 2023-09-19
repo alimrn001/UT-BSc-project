@@ -24,8 +24,8 @@ export default function DownloadSubtitleModal({
     onDownloadRequest(0);
   };
 
-  const handleYTSubDownload = (id) => {
-    onDownloadRequest(id);
+  const handleYTSubDownload = (captionInfo) => {
+    onDownloadRequest(captionInfo);
   };
 
   return (
@@ -71,7 +71,13 @@ export default function DownloadSubtitleModal({
                 <div>
                   <Button
                     className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
-                    onClick={() => handleYTSubDownload(caption.id)}
+                    onClick={() => {
+                      const captionInfo = {
+                        id: caption.id,
+                        languageCode: caption.snippet.language,
+                      };
+                      handleYTSubDownload(captionInfo);
+                    }}
                   >
                     دانلود
                   </Button>
