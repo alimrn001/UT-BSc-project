@@ -1,0 +1,12 @@
+.download-failed-toast-container {
+  position: fixed !important;
+  bottom: 5px !important;
+  z-index: 50000 !important;
+}
+
+@media only screen and (max-width: 480px) {
+  .download-failed-toast-container {
+    left: 5px !important;
+    right: 5px !important;
+  }
+}

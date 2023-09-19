@@ -36,6 +36,7 @@ import {
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
 import DownloadSubtitleModal from "../modal/DownloadSubtitleModal";
+import DownloadFailedToast from "../toast/DownloadFailedToast";
 
 export default function Video() {
   const location = useLocation();
@@ -57,7 +58,7 @@ export default function Video() {
 
   const [captionsData, setCaptionsData] = useState([]);
 
-  const [videoQualities, setVideoQualities] = useState({});
+  const [downloadFailed, SetDownloadFailed] = useState(false);
 
   const [channelData, setChannelData] = useState({});
 
@@ -71,6 +72,7 @@ export default function Video() {
       "downloading " + subtitleInfo.id + " " + subtitleInfo.languageCode
     );
     downloadSubtitle(subtitleInfo);
+    SetDownloadFailed(true);
   };
 
   const getChannelData = async (channelId) => {
@@ -274,7 +276,7 @@ export default function Video() {
                         </Link>
                       </div>
 
-                      <div className="fs-5 mt-3">
+                      <div className="fs-5 mt-4">
                         <Button
                           className="btn-purple btn-no-bs w-100"
                           onClick={handleSubtitleDownloadRequest}
@@ -283,7 +285,7 @@ export default function Video() {
                         </Button>
                       </div>
 
-                      <div className="fs-4 mt-3">دانلود ویدیو</div>
+                      {/* <div className="fs-4 mt-3">دانلود ویدیو</div>
 
                       <div className="ltr mt-3">
                         <Form.Select
@@ -303,9 +305,9 @@ export default function Video() {
                           <option value="2">Two</option>
                           <option value="3">Three</option>
                         </Form.Select>
-                      </div>
+                      </div> */}
 
-                      <div className="mt-3">
+                      <div className="mt-4">
                         <Button className="btn-pink btn-no-bs w-100">
                           دانلود ویدیو
                         </Button>
@@ -332,6 +334,14 @@ export default function Video() {
           }
         </div>
       )}
+      {
+        <div className="download-failed-toast-container">
+          <DownloadFailedToast
+            onShow={SetDownloadFailed}
+            showT={downloadFailed}
+          />
+        </div>
+      }
       {!isLoading && !urlIsValid && <Error code={404} />}
       {isLoading && <PageLoading />}
     </>
