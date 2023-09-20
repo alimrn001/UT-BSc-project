@@ -11,6 +11,7 @@ import {
   BsClock,
 } from "react-icons/bs";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
+import NoSubtitleToGetAlert from "../alerts/NoSubtitleToGetAlert";
 
 export default function VideoInfoModal({ videoData, showP, captionsData }) {
   const [show, setShow] = useState(showP);
@@ -99,14 +100,26 @@ export default function VideoInfoModal({ videoData, showP, captionsData }) {
                 <div className="d-flex align-items-center mt-3 flex-wrap">
                   <BsCcSquare style={{ height: 20, width: 20 }} />
                   {captionsData.map((caption, idx) => (
-                    <span className="video-info-item ps-2">
+                    <span
+                      className={`video-info-item ${
+                        idx === 0 ? "ps-3" : "ps-2"
+                      }`}
+                    >
                       {caption.snippet.language}
                       {idx !== captionsData.length - 1 && ","}
                     </span>
                   ))}
+                  {!captionsData.length && (
+                    <>
+                      <span className="video-info-item ps-3">فاقد زیرنویس</span>
+                      <div className="w-100"></div>
+                      <div className="mt-3 w-100 flex-column">
+                        <NoSubtitleToGetAlert />
+                      </div>
+                    </>
+                  )}
                 </div>
               </Card.Text>
-              {/* <Button variant="primary">Go somewhere</Button> */}
             </Card.Body>
           </Card>
         </Modal.Body>

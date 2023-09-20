@@ -12,6 +12,7 @@ import "./styles/videoPlayer.css";
 import "./styles/errors.css";
 import "./styles/downloadSubtitleModal.css";
 import "./styles/downloadFailedToast.css";
+import "./styles/alerts.css";
 // import "normalize.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";

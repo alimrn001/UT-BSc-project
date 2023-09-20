@@ -1,0 +1,5 @@
+.danger-alert-container {
+  border: solid 1px var(--color-text-alert);
+  border-color: var(--color-text-alert);
+  border-radius: 0.3rem;
+}

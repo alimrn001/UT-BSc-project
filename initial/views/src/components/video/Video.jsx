@@ -1,3 +1,11 @@
+import { useEffect, useState } from "react";
+import { Link, useParams, useLocation } from "react-router-dom";
+import NoSubtitleToGetModal from "../modal/NoSubtitleToGetModal";
+import Error from "../shared/errors/Error";
+import PageLoading from "../shared/loading/PageLoading";
+import DownloadSubtitleModal from "../modal/DownloadSubtitleModal";
+import DownloadFailedToast from "../toast/DownloadFailedToast";
+
 import {
   Button,
   Col,
@@ -7,9 +15,6 @@ import {
   Row,
   Stack,
 } from "react-bootstrap";
-import Error from "../shared/errors/Error";
-import ReactPlayer from "react-player";
-import PageLoading from "../shared/loading/PageLoading";
 import {
   BsEye,
   BsHandThumbsUp,
@@ -17,31 +22,22 @@ import {
   BsCalendarDate,
   BsClock,
 } from "react-icons/bs";
-import { Link, useParams, useLocation } from "react-router-dom";
-import NoSubtitleToGetModal from "../modal/NoSubtitleToGetModal";
-import { useEffect, useState } from "react";
 import {
   YTUrlIsValid,
   retrieveVideoData,
   getYtVideoUrlById,
   retrieveChannelData,
-  retrieveVideoQualities,
   retrieveCaptionsData,
   downloadSubtitle,
 } from "../../utils/youtubeAPI/YTAPI";
-// import { fetchYTVideo } from "../../utils/serverAPI/videoAPI";
-
 import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
-import DownloadSubtitleModal from "../modal/DownloadSubtitleModal";
-import DownloadFailedToast from "../toast/DownloadFailedToast";
 
 export default function Video() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  // const id = searchParams.get("v");
   const { id } = useParams();
 
   const [showNoSubtitleModal, setShowNoSubtitleModal] = useState(false);
@@ -111,16 +107,6 @@ export default function Video() {
     }
   };
 
-  const getVideoQualities = async () => {
-    try {
-      const qualitiesData = await retrieveVideoQualities(id);
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      console.log("after loading");
-    }
-  };
-
   useEffect(() => {
     (async () => {
       setIsLoading(true);
@@ -166,7 +152,7 @@ export default function Video() {
                     <Stack>
                       <div className="d-flex align-items-center flex-wrap">
                         <BsEye style={{ height: 20, width: 20 }} />
-                        <span className="video-info-item ps-2">
+                        <span className="video-info-item ps-3">
                           {parseInt(
                             videoData.statistics.viewCount
                           ).toLocaleString("en-US")}
@@ -175,7 +161,7 @@ export default function Video() {
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsHandThumbsUp style={{ height: 20, width: 20 }} />
-                        <span className="video-info-item ps-2">
+                        <span className="video-info-item ps-3">
                           {parseInt(
                             videoData.statistics.likeCount
                           ).toLocaleString("en-US")}
@@ -184,7 +170,7 @@ export default function Video() {
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsCalendarDate style={{ height: 20, width: 20 }} />
-                        <span className="video-info-item ps-2">
+                        <span className="video-info-item ps-3">
                           {new Date(
                             videoData.videoInfo.snippet.publishedAt
                           ).toDateString()}
@@ -193,7 +179,7 @@ export default function Video() {
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsClock style={{ height: 20, width: 20 }} />
-                        <span className="video-info-item ps-2">
+                        <span className="video-info-item ps-3">
                           {convertYouTubeDurationToMinutes(
                             videoData.videoInfo.contentDetails.duration
                           ).toFixed(0)}{" "}
@@ -204,11 +190,20 @@ export default function Video() {
                       <div className="d-flex align-items-center mt-3 flex-wrap">
                         <BsCcSquare style={{ height: 20, width: 20 }} />
                         {captionsData.map((caption, idx) => (
-                          <span className="video-info-item ps-2">
+                          <span
+                            className={`video-info-item ${
+                              idx === 0 ? "ps-3" : "ps-2"
+                            }`}
+                          >
                             {caption.snippet.language}
                             {idx !== captionsData.length - 1 && ","}
                           </span>
                         ))}
+                        {!captionsData.length && (
+                          <span className="video-info-item ps-3">
+                            فاقد زیرنویس
+                          </span>
+                        )}
                       </div>
                     </Stack>
                   </Col>
@@ -285,28 +280,6 @@ export default function Video() {
                         </Button>
                       </div>
 
-                      {/* <div className="fs-4 mt-3">دانلود ویدیو</div>
-
-                      <div className="ltr mt-3">
-                        <Form.Select
-                          className="bg-1 text-1 btn-no-bs select-form-purple"
-                          aria-label="Default select example"
-                        >
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </Form.Select>
-                      </div> */}
-
                       <div className="mt-4">
                         <Button className="btn-pink btn-no-bs w-100">
                           دانلود ویدیو
@@ -332,16 +305,17 @@ export default function Video() {
               onDownloadRequest={initializeSubtitleDownload}
             />
           }
+          {
+            <div className="download-failed-toast-container">
+              <DownloadFailedToast
+                onShow={SetDownloadFailed}
+                showT={downloadFailed}
+              />
+            </div>
+          }
         </div>
       )}
-      {
-        <div className="download-failed-toast-container">
-          <DownloadFailedToast
-            onShow={SetDownloadFailed}
-            showT={downloadFailed}
-          />
-        </div>
-      }
+
       {!isLoading && !urlIsValid && <Error code={404} />}
       {isLoading && <PageLoading />}
     </>
