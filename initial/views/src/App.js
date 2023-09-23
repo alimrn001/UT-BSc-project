@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import Home from "./components/home/Home";
 import VideoPlayer from "./components/video/Video";
 import Error from "./components/shared/errors/Error";
+import FAQ from "./components/pages/FAQ";
 
 const fontLink = document.createElement("link");
 fontLink.href =
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="watch/:id" element={<VideoPlayer />} />
+            <Route path="faq" element={<FAQ />} />
             <Route path="*" element={<Error code={404} />} />
           </Route>
         </Routes>

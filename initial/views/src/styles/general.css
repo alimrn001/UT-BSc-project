@@ -25,6 +25,8 @@
   --color-text-dark-1: #ffffff;
   --color-text-light-1: #041333;
 
+  --color-text-gray-1: #ccc;
+
   --color-text-alert: #ff3131;
 }
 
@@ -183,4 +185,8 @@ body {
 
 .select-form-purple:focus {
   border-color: var(--color-purple) !important;
+}
+
+.pointer {
+  cursor: pointer;
 }

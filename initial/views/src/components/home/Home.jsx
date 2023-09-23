@@ -8,7 +8,7 @@ import {
   retrieveCaptionsData,
 } from "../../utils/youtubeAPI/YTAPI";
 import VideoInfoModal from "../modal/VideoInfoModal";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { Button, InputGroup, FormControl, Spinner } from "react-bootstrap";
 
 export default function Home() {
   const [isCheckingVideo, setIsCheckingVideo] = useState(false);
@@ -80,13 +80,13 @@ export default function Home() {
             id="basic-addon2"
             onClick={handleUrlSubmit}
           >
-            <span className="text-1">
+            <span className="text-1 d-flex align-items-center">
               {!isCheckingVideo ? (
                 <span>مشاهده</span>
               ) : (
-                <div className="spinner-border" role="status">
+                <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
-                </div>
+                </Spinner>
               )}
             </span>
           </Button>
