@@ -164,11 +164,6 @@ body {
   color: var(--color-bg-1) !important;
 }
 
-.btn-transparent {
-  color: var(--color-text-1) !important;
-  box-shadow: none !important;
-}
-
 .btn-gradient {
   background: linear-gradient(
     to right,

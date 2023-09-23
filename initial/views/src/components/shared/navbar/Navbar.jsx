@@ -1,10 +1,12 @@
 import Logo from "../../../assets/logo.svg";
-import { BsMoonFill, BsSunFill } from "react-icons/bs";
+import { BsMoonFill, BsSunFill, BsQuestionCircle } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 export default function Navbar() {
   const [theme, setTheme] = useState(getCurrentTheme());
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadTheme(theme);
@@ -36,6 +38,11 @@ export default function Navbar() {
     localStorage.setItem("yt.theme", newTheme);
   };
 
+  const navigateToFAQ = (e) => {
+    e.preventDefault();
+    navigate("/faq");
+  };
+
   return (
     <nav className="navbar bg-1 justify-content-between">
       <div className="container-fluid navbar-container">
@@ -49,16 +56,28 @@ export default function Navbar() {
           />
           <span className="text-1 pe-1">YtDown</span>
         </Link>
-        <button
-          className="btn btn-transparent theme-toggle-btn d-flex align-items-center"
-          type="button"
-          onClick={toggleTheme}
-        >
-          {theme === "light" && (
-            <BsMoonFill style={{ width: 20, height: 20 }} />
-          )}
-          {theme === "dark" && <BsSunFill style={{ width: 24, height: 24 }} />}
-        </button>
+        <div className="d-flex align-items-center">
+          <Button
+            className="btn btn-no-bs theme-toggle-btn text-1"
+            variant=""
+            onClick={(e) => navigateToFAQ(e)}
+          >
+            <BsQuestionCircle style={{ width: 22, height: 22 }} />
+          </Button>
+          <Button
+            className="btn text-1 btn-no-bs theme-toggle-btn d-flex align-items-center"
+            type="button"
+            variant=""
+            onClick={toggleTheme}
+          >
+            {theme === "light" && (
+              <BsMoonFill style={{ width: 20, height: 20 }} />
+            )}
+            {theme === "dark" && (
+              <BsSunFill style={{ width: 24, height: 24 }} />
+            )}
+          </Button>
+        </div>
       </div>
     </nav>
   );
