@@ -34,6 +34,7 @@ import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
+import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
 
 export default function Video() {
   const location = useLocation();
@@ -45,6 +46,11 @@ export default function Video() {
   const [showDownloadSubtitleModal, setShowDownloadSubtitleModal] = useState(
     false
   );
+
+  const [
+    showDownloadSubtitleCanvasMobile,
+    setShowDownloadSubtitleCanvasMobile,
+  ] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -58,9 +64,12 @@ export default function Video() {
 
   const [channelData, setChannelData] = useState({});
 
-  const handleSubtitleDownloadRequest = () => {
+  const handleSubtitleDownloadRequest = (screen) => {
     if (captionsData.length === 0) setShowNoSubtitleModal(true);
-    else setShowDownloadSubtitleModal(true);
+    else {
+      if (screen === "desktop") setShowDownloadSubtitleModal(true);
+      if (screen === "mobile") setShowDownloadSubtitleCanvasMobile(true);
+    }
   };
 
   const initializeSubtitleDownload = (subtitleInfo) => {
@@ -273,8 +282,19 @@ export default function Video() {
 
                       <div className="fs-5 mt-4">
                         <Button
-                          className="btn-purple btn-no-bs w-100"
-                          onClick={handleSubtitleDownloadRequest}
+                          className="btn-purple btn-no-bs w-100 d-none d-sm-block"
+                          onClick={() =>
+                            handleSubtitleDownloadRequest("desktop")
+                          }
+                        >
+                          دانلود زیرنویس
+                        </Button>
+
+                        <Button
+                          className="btn-purple btn-no-bs w-100 d-block d-sm-none"
+                          onClick={() =>
+                            handleSubtitleDownloadRequest("mobile")
+                          }
                         >
                           دانلود زیرنویس
                         </Button>
@@ -301,6 +321,14 @@ export default function Video() {
             <DownloadSubtitleModal
               onShow={setShowDownloadSubtitleModal}
               showP={showDownloadSubtitleModal}
+              captionsData={captionsData}
+              onDownloadRequest={initializeSubtitleDownload}
+            />
+          }
+          {
+            <DownloadSubtitleCanvasMobile
+              onShow={setShowDownloadSubtitleCanvasMobile}
+              showC={showDownloadSubtitleCanvasMobile}
               captionsData={captionsData}
               onDownloadRequest={initializeSubtitleDownload}
             />

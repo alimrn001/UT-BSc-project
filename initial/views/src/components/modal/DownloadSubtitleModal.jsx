@@ -31,7 +31,7 @@ export default function DownloadSubtitleModal({
   return (
     <>
       <Modal dir="rtl" show={show} onHide={handleClose}>
-        <Modal.Header className="video-info-modal-header bg-1 text-1">
+        <Modal.Header className="bg-1 text-1">
           <div className="custom-close-button" onClick={handleClose}>
             <Button className="btn btn-modal-close btn-no-bs d-flex align-items-center bg-1">
               <BsXLg />
