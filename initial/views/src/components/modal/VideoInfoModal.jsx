@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Modal, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,16 +12,38 @@ import {
 } from "react-icons/bs";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 import NoSubtitleToGetAlert from "../alerts/NoSubtitleToGetAlert";
+import axios from "axios";
 
 export default function VideoInfoModal({ videoData, showP, captionsData }) {
   const [show, setShow] = useState(showP);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [thumbnail, setThumbnail] = useState(null);
   const navigate = useNavigate();
 
   const handleWatchVideoRequest = () => {
     navigate(`watch/${videoData.videoInfo.id}`);
   };
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8000/api/v1/thumbnail/${videoData.videoInfo.id}/`,
+        {
+          responseType: "arraybuffer",
+        }
+      )
+      .then((response) => {
+        const base64 = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setThumbnail(`data:;base64,${base64}`);
+      })
+      .catch((error) => console.error("Error fetching thumbnail:", error));
+  }, []);
 
   return (
     <>
@@ -45,10 +67,11 @@ export default function VideoInfoModal({ videoData, showP, captionsData }) {
           <Card className="bg-1 text-1 video-info-modal-card">
             <Card.Img
               variant="top"
-              src={
-                videoData.videoInfo.snippet.thumbnails.standard?.url ||
-                videoData.videoInfo.snippet.thumbnails.default.url
-              }
+              src={thumbnail}
+              // src={
+              //   videoData.videoInfo.snippet.thumbnails.standard?.url ||
+              //   videoData.videoInfo.snippet.thumbnails.default.url
+              // }
             />
             <Card.Body className="bg-1 text-1">
               <Card.Title>{videoData.videoInfo.snippet.title}</Card.Title>

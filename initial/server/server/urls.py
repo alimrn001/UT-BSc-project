@@ -17,7 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from thumbnail.views import get_thumbnail
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('video/', include('videoDownloader.urls'))
+    path('video/', include('videoDownloader.urls')),
+    path('api/v1/thumbnail/<str:video_id>/', get_thumbnail, name='get_thumbnail')
 ]
