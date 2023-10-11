@@ -20,7 +20,7 @@ export async function fetchYTVideo(videoUrl) {
 export async function getYTVideoThumbnail(videoId) {
   try {
     const response = await axios.get(
-      `http://localhost:8000/api/v1/thumbnail/${videoData.videoInfo.id}/`,
+      `http://localhost:8000/api/v1/thumbnail/${videoId}/`,
       {
         responseType: "arraybuffer",
       }

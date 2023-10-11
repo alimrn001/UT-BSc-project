@@ -11,6 +11,7 @@ import {
   BsClock,
 } from "react-icons/bs";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
+import { getYTVideoThumbnail } from "../../utils/serverAPI/serverAPI";
 import NoSubtitleToGetAlert from "../alerts/NoSubtitleToGetAlert";
 import axios from "axios";
 
@@ -25,24 +26,34 @@ export default function VideoInfoModal({ videoData, showP, captionsData }) {
     navigate(`watch/${videoData.videoInfo.id}`);
   };
 
+  const getVideoThumbnail = async () => {
+    try {
+      const response = await getYTVideoThumbnail(videoData.videoInfo.id);
+      setThumbnail(`data:;base64,${response}`);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/api/v1/thumbnail/${videoData.videoInfo.id}/`,
-        {
-          responseType: "arraybuffer",
-        }
-      )
-      .then((response) => {
-        const base64 = btoa(
-          new Uint8Array(response.data).reduce(
-            (data, byte) => data + String.fromCharCode(byte),
-            ""
-          )
-        );
-        setThumbnail(`data:;base64,${base64}`);
-      })
-      .catch((error) => console.error("Error fetching thumbnail:", error));
+    getVideoThumbnail();
+    // axios
+    //   .get(
+    //     `http://localhost:8000/api/v1/thumbnail/${videoData.videoInfo.id}/`,
+    //     {
+    //       responseType: "arraybuffer",
+    //     }
+    //   )
+    //   .then((response) => {
+    //     const base64 = btoa(
+    //       new Uint8Array(response.data).reduce(
+    //         (data, byte) => data + String.fromCharCode(byte),
+    //         ""
+    //       )
+    //     );
+    //     setThumbnail(`data:;base64,${base64}`);
+    //   })
+    //   .catch((error) => console.error("Error fetching thumbnail:", error));
   }, []);
 
   return (
