@@ -37,23 +37,6 @@ export default function VideoInfoModal({ videoData, showP, captionsData }) {
 
   useEffect(() => {
     getVideoThumbnail();
-    // axios
-    //   .get(
-    //     `http://localhost:8000/api/v1/thumbnail/${videoData.videoInfo.id}/`,
-    //     {
-    //       responseType: "arraybuffer",
-    //     }
-    //   )
-    //   .then((response) => {
-    //     const base64 = btoa(
-    //       new Uint8Array(response.data).reduce(
-    //         (data, byte) => data + String.fromCharCode(byte),
-    //         ""
-    //       )
-    //     );
-    //     setThumbnail(`data:;base64,${base64}`);
-    //   })
-    //   .catch((error) => console.error("Error fetching thumbnail:", error));
   }, []);
 
   return (

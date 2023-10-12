@@ -135,7 +135,3 @@ export async function downloadSubtitle(captionId) {
     console.error("Error", error);
   }
 }
-
-export async function retrieveVideoQualities(videoId) {
-  // must be get from server and pytube!!
-}

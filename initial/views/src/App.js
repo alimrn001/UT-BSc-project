@@ -20,7 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="watch/:id" element={<VideoPlayer />} />
+            <Route path="watch/:id" element={<VideoPlayer embed={false} />} />
+            <Route path="embed/:id" element={<VideoPlayer embed={true} />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="*" element={<Error code={404} />} />
           </Route>

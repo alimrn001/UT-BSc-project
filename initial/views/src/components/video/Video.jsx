@@ -14,6 +14,8 @@ import {
   Image,
   Row,
   Stack,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import {
   BsEye,
@@ -36,7 +38,7 @@ import {
 } from "../../utils/dateTime/DateTimeConverter";
 import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
 
-export default function Video() {
+export default function Video({ embed }) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const { id } = useParams();
@@ -63,6 +65,12 @@ export default function Video() {
   const [downloadFailed, SetDownloadFailed] = useState(false);
 
   const [channelData, setChannelData] = useState({});
+
+  const renderEmbedVPNTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      نیاز دارد VPN به
+    </Tooltip>
+  );
 
   const handleSubtitleDownloadRequest = (screen) => {
     if (captionsData.length === 0) setShowNoSubtitleModal(true);
@@ -136,10 +144,26 @@ export default function Video() {
         <div className="main-body">
           <div className="video-container mb-5">
             <div className="d-flex justify-content-center mt-3">
-              <video className="yt-video w-100" controls>
-                <source type="text/html" />
-                Your browser does not support the video tag.
-              </video>
+              {!embed && (
+                <video className="yt-video w-100" controls>
+                  <source type="text/html" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              {embed && (
+                <div className="yt-video w-100">
+                  <iframe
+                    // width="560"
+                    // height="315"
+                    src="https://www.youtube.com/embed/6dOwHzCHfgA?si=gYPjE8PfJv8PO5s-"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                  <p className="caption mt-5 fs-3">salam</p>
+                </div>
+              )}
               {/* {videoBlob && (
                 <video controls src={URL.createObjectURL(videoBlob)}></video>
               )} */}
@@ -278,6 +302,28 @@ export default function Video() {
                         >
                           مشاهده در YouTube
                         </Link>
+                      </div>
+
+                      <div className="mt-4">
+                        {!embed && (
+                          <OverlayTrigger
+                            placement="left"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={renderEmbedVPNTooltip}
+                          >
+                            <Link
+                              to={`/embed/${id}`}
+                              className="url-purple fs-5"
+                            >
+                              نمایش به صورت Embed
+                            </Link>
+                          </OverlayTrigger>
+                        )}
+                        {embed && (
+                          <Link to={`/watch/${id}`} className="url-purple fs-5">
+                            نمایش به صورت Video
+                          </Link>
+                        )}
                       </div>
 
                       <div className="fs-5 mt-4">

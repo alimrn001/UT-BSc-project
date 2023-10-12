@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 from thumbnail.views import get_thumbnail
+from videoFormats.views import get_video_formats
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('video/', include('videoDownloader.urls')),
-    path('api/v1/thumbnail/<str:video_id>/', get_thumbnail, name='get_thumbnail')
+    path('api/v1/thumbnail/<str:video_id>/', get_thumbnail, name='get_thumbnail'),
+    path('api/v1/formats/<str:video_id>/', get_video_formats, name='get_video_formats')
 ]
