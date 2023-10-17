@@ -37,6 +37,7 @@ def download_youtube_video(request):
     return HttpResponseNotFound("Video not found")
 
 
+@api_view(['GET'])
 def get_video_streaming_url(request, video_id):
     try:
         url = f'https://www.youtube.com/watch?v={video_id}'

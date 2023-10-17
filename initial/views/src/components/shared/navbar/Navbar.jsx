@@ -38,11 +38,6 @@ export default function Navbar() {
     localStorage.setItem("yt.theme", newTheme);
   };
 
-  const navigateToFAQ = (e) => {
-    e.preventDefault();
-    navigate("/faq");
-  };
-
   return (
     <nav className="navbar bg-1 justify-content-between">
       <div className="container-fluid navbar-container">

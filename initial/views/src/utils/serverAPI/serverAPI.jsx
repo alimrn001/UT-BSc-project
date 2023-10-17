@@ -13,7 +13,24 @@ export async function fetchYTVideo(videoUrl) {
       console.error("Failed to fetch video:", response.statusText);
     }
   } catch (error) {
-    console.error("Error fetching video:", error);
+    throw new Error("Error fetching video:", error);
+  }
+}
+
+export async function getYTVideoStreamData(videoId) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/video/${videoId}/`
+    );
+    console.log("this is response");
+    console.log(response);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.error("Error in getting video stream data");
+    }
+  } catch (error) {
+    throw new Error("Error in getting video stream data:", error);
   }
 }
 
@@ -34,10 +51,10 @@ export async function getYTVideoThumbnail(videoId) {
       );
       return base64;
     } else {
-      console.error("Failed to fetch video:", response.statusText);
+      console.error("Failed to fetch video thumbnail:", response.statusText);
     }
   } catch (error) {
-    console.error("Error getting video thumbnail!:", error);
+    throw new Error("Error getting video thumbnail!");
   }
 }
 
@@ -56,6 +73,6 @@ export async function getYTVideoDownloadFormats(videoId) {
       );
     }
   } catch (error) {
-    console.error("Error getting video download options!:", error);
+    throw new Error("Error getting video download options!");
   }
 }

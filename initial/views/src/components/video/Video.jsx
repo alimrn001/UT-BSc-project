@@ -5,12 +5,12 @@ import Error from "../shared/errors/Error";
 import PageLoading from "../shared/loading/PageLoading";
 import DownloadSubtitleModal from "../modal/DownloadSubtitleModal";
 import DownloadFailedToast from "../toast/DownloadFailedToast";
-
+import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
+import DownloadVideoModal from "../modal/DownloadVideoModal";
+import DownloadVideoCanvasMobile from "../canvas/DownloadVideoCanvasMobile";
 import {
   Button,
   Col,
-  Container,
-  Form,
   Image,
   Row,
   Stack,
@@ -33,13 +33,11 @@ import {
   retrieveCaptionsData,
   downloadSubtitle,
 } from "../../utils/youtubeAPI/YTAPI";
-import { getYTVideoDownloadFormats } from "../../utils/serverAPI/serverAPI";
 import {
-  convertYouTubeDurationToMinutes,
-  convertYouTubeDateToString,
-} from "../../utils/dateTime/DateTimeConverter";
-import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
-import DownloadVideoModal from "../modal/DownloadVideoModal";
+  getYTVideoDownloadFormats,
+  getYTVideoStreamData,
+} from "../../utils/serverAPI/serverAPI";
+import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 
 export default function Video({ embed }) {
   const location = useLocation();
@@ -74,6 +72,8 @@ export default function Video({ embed }) {
   const [urlIsValid, setUrlIsValid] = useState(false);
 
   const [videoData, setVideoData] = useState({});
+
+  const [videoStreamData, setVideoStreamData] = useState({});
 
   const [captionsData, setCaptionsData] = useState([]);
 
@@ -116,6 +116,18 @@ export default function Video({ embed }) {
     SetDownloadFailed(true);
   };
 
+  const getVideoStreamData = async () => {
+    try {
+      const streamData = await getYTVideoStreamData(id);
+      console.log("this is streamData");
+      console.log(streamData);
+      setVideoStreamData(streamData);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+    }
+  };
+
   const getChannelData = async (channelId) => {
     try {
       const response = await retrieveChannelData(channelId);
@@ -152,14 +164,18 @@ export default function Video({ embed }) {
     }
   };
 
-  const getVideoDownloadOptions = async () => {
+  const getVideoDownloadOptions = async (screen) => {
     try {
       setVideoDownloadOptionsIsLoading(true);
-      const downloadOptions = await getYTVideoDownloadFormats(id); // you can chack if it's already been get before so you dont load it again !
-      setVideoDownloadOptions(downloadOptions);
+      if (videoDownloadOptions.length === 0) {
+        const downloadOptions = await getYTVideoDownloadFormats(id); // you can chack if it's already been get before so you dont load it again !
+        setVideoDownloadOptions(downloadOptions);
+      }
+      if (screen === "desktop") setShowDownloadVideoModal(true);
+      if (screen === "mobile") setShowDownloadVideoCanvasMobile(true);
     } catch (error) {
       SetDownloadFailed(true);
-      console.log("error:", error);
+      console.log("an error occured");
     } finally {
       setVideoDownloadOptionsIsLoading(false);
     }
@@ -171,6 +187,7 @@ export default function Video({ embed }) {
       const result = await YTUrlIsValid(getYtVideoUrlById(id));
       setUrlIsValid(result);
       if (result) {
+        await getVideoStreamData();
         await getVideoData();
         await getVideoCaptions();
       }
@@ -187,7 +204,7 @@ export default function Video({ embed }) {
             <div className="d-flex justify-content-center mt-3">
               {!embed && (
                 <video className="yt-video w-100" controls>
-                  <source type="text/html" />
+                  <source src={videoStreamData.url} />
                   Your browser does not support the video tag.
                 </video>
               )}
@@ -389,8 +406,20 @@ export default function Video({ embed }) {
 
                       <div className="mt-4">
                         <Button
-                          className="btn-pink btn-no-bs w-100"
-                          onClick={() => handleVideoDownloadRequest("desktop")}
+                          className="btn-pink btn-no-bs w-100 d-none d-sm-block"
+                          onClick={() => getVideoDownloadOptions("desktop")}
+                        >
+                          {videoDownloadOptionsIsLoading === true && (
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Spinner animation="border" />
+                            </div>
+                          )}
+                          {!videoDownloadOptionsIsLoading && "دانلود ویدیو"}
+                        </Button>
+
+                        <Button
+                          className="btn-pink btn-no-bs w-100 d-block d-sm-none"
+                          onClick={() => getVideoDownloadOptions("mobile")}
                         >
                           {videoDownloadOptionsIsLoading === true && (
                             <div className="d-flex align-items-center justify-content-center">
@@ -432,6 +461,14 @@ export default function Video({ embed }) {
             <DownloadVideoModal
               onShow={setShowDownloadVideoModal}
               showP={showDownloadVideoModal}
+              optionsData={videoDownloadOptions}
+              onDownloadRequest={initializeVideoDownload}
+            />
+          }
+          {
+            <DownloadVideoCanvasMobile
+              onShow={setShowDownloadVideoCanvasMobile}
+              showC={showDownloadVideoCanvasMobile}
               optionsData={videoDownloadOptions}
               onDownloadRequest={initializeVideoDownload}
             />
