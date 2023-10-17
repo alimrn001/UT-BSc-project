@@ -57,13 +57,15 @@ export default function Navbar() {
           <span className="text-1 pe-1">YtDown</span>
         </Link>
         <div className="d-flex align-items-center">
-          <Button
-            className="btn btn-no-bs theme-toggle-btn text-1"
-            variant=""
-            onClick={(e) => navigateToFAQ(e)}
-          >
-            <BsQuestionCircle style={{ width: 22, height: 22 }} />
-          </Button>
+          <Link to="/faq">
+            <Button
+              className="btn btn-no-bs theme-toggle-btn text-1"
+              variant=""
+              // onClick={(e) => navigateToFAQ(e)}
+            >
+              <BsQuestionCircle style={{ width: 22, height: 22 }} />
+            </Button>
+          </Link>
           <Button
             className="btn text-1 btn-no-bs theme-toggle-btn d-flex align-items-center"
             type="button"
