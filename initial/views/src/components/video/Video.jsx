@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
+import axios from "axios";
 import NoSubtitleToGetModal from "../modal/NoSubtitleToGetModal";
 import Error from "../shared/errors/Error";
 import PageLoading from "../shared/loading/PageLoading";
@@ -41,7 +48,7 @@ import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeCo
 
 export default function Video({ embed }) {
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [showNoSubtitleModal, setShowNoSubtitleModal] = useState(false);
@@ -111,9 +118,30 @@ export default function Video({ embed }) {
     SetDownloadFailed(true);
   };
 
-  const initializeVideoDownload = (videoInfo) => {
-    console.log("downloading " + videoInfo.itag + " " + videoInfo.url);
-    SetDownloadFailed(true);
+  const initializeVideoDownload = async (videoInfo) => {
+    const a = document.createElement("a");
+    a.download = "file.mp4";
+    a.href = videoInfo.url;
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    // try {
+    //   const response = await axios.get(videoInfo.url, { responseType: "blob" });
+    //   const url = window.URL.createObjectURL(new Blob([response.data]));
+    //   const a = document.createElement("a");
+    //   a.href = url;
+    //   a.download = `${videoData.videoInfo.snippet.title}_${
+    //     videoInfo.type === "video" ? videoInfo.resolution : videoInfo.audio_abr
+    //   }.${videoInfo.extension.split("/")[1]}`; // You can set the downloaded file name here
+    //   document.body.appendChild(a);
+    //   a.click();
+    //   document.body.removeChild(a);
+    //   window.URL.revokeObjectURL(url);
+    // } catch (error) {
+    //   SetDownloadFailed(true);
+    //   console.error("Error downloading the video:", error);
+    // }
   };
 
   const getVideoStreamData = async () => {

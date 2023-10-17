@@ -67,11 +67,7 @@ export default function DownloadVideoCanvasMobile({
                 <Button
                   className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
                   onClick={() => {
-                    const optionInfo = {
-                      itag: option.itag,
-                      url: option.url,
-                    };
-                    handleYTVideoDownload(optionInfo);
+                    handleYTVideoDownload(option);
                   }}
                 >
                   دانلود

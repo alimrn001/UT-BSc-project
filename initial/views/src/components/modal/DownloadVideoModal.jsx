@@ -59,11 +59,7 @@ export default function DownloadVideoModal({
                   <Button
                     className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
                     onClick={() => {
-                      const downloadInfo = {
-                        url: option.url,
-                        itag: option.itag,
-                      };
-                      handleYTVideoDownload(downloadInfo);
+                      handleYTVideoDownload(option);
                     }}
                   >
                     دانلود
