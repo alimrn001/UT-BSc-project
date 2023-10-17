@@ -36,7 +36,8 @@ export default function DownloadSubtitleCanvasMobile({
       // responsive="sm"
       placement="bottom"
       className="bg-1 text-1"
-      style={{ height: "fit-content" }}
+      style={{ height: "100vh" }}
+      // style={{ height: "fit-content" }}
     >
       <Offcanvas.Header>
         <div className="custom-close-button" onClick={handleClose}>
@@ -68,7 +69,7 @@ export default function DownloadSubtitleCanvasMobile({
           </div>
           {captionsData.map((caption, idx) => (
             <div
-              className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3 sub-language-container`}
+              className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3 border-top-dashed`}
             >
               <div>
                 <h5 className="mb-0">

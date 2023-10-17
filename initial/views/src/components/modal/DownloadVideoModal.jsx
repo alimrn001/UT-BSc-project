@@ -3,10 +3,10 @@ import { Button, Modal, Stack } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
 import { getLanguageTranslationByCode } from "../../utils/translation/Translation";
 
-export default function DownloadSubtitleModal({
+export default function DownloadVideoModal({
   showP,
   onShow,
-  captionsData,
+  optionsData,
   onDownloadRequest,
 }) {
   const [show, setShow] = useState(showP);
@@ -20,11 +20,7 @@ export default function DownloadSubtitleModal({
     setShow(showP);
   }, [showP]);
 
-  const handleFaraSubDownload = () => {
-    onDownloadRequest(0);
-  };
-
-  const handleYTSubDownload = (captionInfo) => {
+  const handleYTVideoDownload = (captionInfo) => {
     onDownloadRequest(captionInfo);
   };
 
@@ -37,46 +33,37 @@ export default function DownloadSubtitleModal({
               <BsXLg />
             </Button>
           </div>
-          <Modal.Title>دانلود زیرنویس</Modal.Title>
+          <Modal.Title>دانلود ویدیو</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-1 text-1">
           <p className="fw-bold">
-            لطفا زیرنویس با زبان مورد نظر خود را برای دانلود انتخاب کنید.
+            لطفا فرمت مورد نظر خود برای دانلود انتخاب کنید.
           </p>
           <Stack>
-            <div
-              className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3`}
-            >
-              <div>
-                <h5 className="mb-0">فارسی (ترجمه فرازین)</h5>
-              </div>
-              <div>
-                <Button
-                  className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
-                  onClick={handleFaraSubDownload}
-                >
-                  دانلود
-                </Button>
-              </div>
-            </div>
-            {captionsData.map((caption, idx) => (
+            {optionsData.map((option, idx) => (
               <div
-                className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3 border-top-dashed`}
+                className={`d-flex flex-wrap align-items-center justify-content-between px-2 py-3 ${
+                  idx !== 0 && "border-top-dashed"
+                }`}
               >
-                <div>
-                  <h5 className="mb-0">
-                    {getLanguageTranslationByCode(caption.snippet.language)}
-                  </h5>
+                <div className="d-flex justify-content-between">
+                  <p className="mb-0">نوع : {option.extension}</p>
+                  {option.type === "video" && (
+                    <p className="mb-0">, کیفیت : {option.resolution} </p>
+                  )}
+                  {option.type === "audio" && (
+                    <p className="mb-0">, کیفیت : {option.audio_abr} </p>
+                  )}
                 </div>
                 <div>
                   <Button
                     className="btn btn-outline-green btn-no-bs d-flex align-items-center bg-1"
                     onClick={() => {
-                      const captionInfo = {
-                        id: caption.id,
-                        languageCode: caption.snippet.language,
+                      const downloadInfo = {
+                        url: option.url,
+                        itag: option.itag,
                       };
-                      handleYTSubDownload(captionInfo);
+                      handleYTVideoDownload(downloadInfo);
                     }}
                   >
                     دانلود

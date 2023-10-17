@@ -12,7 +12,19 @@ def get_video_formats(request, video_id):
     try:
         url = f'https://www.youtube.com/watch?v={video_id}'
         yt = YouTube(url)
-        return Response(yt.streams)
+        formats = []
+        for stream in yt.streams:
+            format_data = {
+                'itag': stream.itag,
+                'type': stream.type,
+                'video_id': video_id,
+                'resolution': stream.resolution,
+                'audio_abr': stream.abr,
+                'extension': stream.mime_type,
+                'url': stream.url,
+            }
+            formats.append(format_data)
+        return Response(formats)
 
     except Exception as e:
         return HttpResponse(status=500)

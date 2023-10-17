@@ -1,9 +1,12 @@
 import os
 import io
 import requests
-from django.http import FileResponse, HttpResponseNotFound, JsonResponse
+from django.http import FileResponse, HttpResponseNotFound, JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from pytube import YouTube
+
 
 @csrf_exempt
 def download_youtube_video(request):
@@ -32,3 +35,23 @@ def download_youtube_video(request):
             return JsonResponse({'error': 'Video download failed'})
 
     return HttpResponseNotFound("Video not found")
+
+
+def get_video_streaming_url(request, video_id):
+    try:
+        url = f'https://www.youtube.com/watch?v={video_id}'
+        yt = YouTube(url)
+        stream = yt.streams.get_highest_resolution()
+        format_data = {
+            'itag': stream.itag,
+            'type': stream.type,
+            'video_id': video_id,
+            'resolution': stream.resolution,
+            'audio_abr': stream.abr,
+            'extension': stream.mime_type.split('/')[-1],
+            'url': stream.url,
+        }
+        return Response(format_data)
+
+    except Exception as e:
+        return HttpResponse(status=500)

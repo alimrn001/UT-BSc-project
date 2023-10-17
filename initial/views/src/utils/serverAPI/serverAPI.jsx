@@ -40,3 +40,22 @@ export async function getYTVideoThumbnail(videoId) {
     console.error("Error getting video thumbnail!:", error);
   }
 }
+
+export async function getYTVideoDownloadFormats(videoId) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/formats/${videoId}/`
+    );
+    if (response.status === 200) {
+      const data = response.data;
+      return data;
+    } else {
+      console.error(
+        "Failed to fetch video download options:",
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Error getting video download options!:", error);
+  }
+}

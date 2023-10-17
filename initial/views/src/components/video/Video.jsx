@@ -16,6 +16,7 @@ import {
   Stack,
   OverlayTrigger,
   Tooltip,
+  Spinner,
 } from "react-bootstrap";
 import {
   BsEye,
@@ -32,11 +33,13 @@ import {
   retrieveCaptionsData,
   downloadSubtitle,
 } from "../../utils/youtubeAPI/YTAPI";
+import { getYTVideoDownloadFormats } from "../../utils/serverAPI/serverAPI";
 import {
   convertYouTubeDurationToMinutes,
   convertYouTubeDateToString,
 } from "../../utils/dateTime/DateTimeConverter";
 import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
+import DownloadVideoModal from "../modal/DownloadVideoModal";
 
 export default function Video({ embed }) {
   const location = useLocation();
@@ -54,13 +57,27 @@ export default function Video({ embed }) {
     setShowDownloadSubtitleCanvasMobile,
   ] = useState(false);
 
+  const [showDownloadVideoModal, setShowDownloadVideoModal] = useState(false);
+
+  const [
+    showDownloadVideoCanvasMobile,
+    setShowDownloadVideoCanvasMobile,
+  ] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const [
+    videoDownloadOptionsIsLoading,
+    setVideoDownloadOptionsIsLoading,
+  ] = useState(false); //can be set to 'false' or 'undefined'
 
   const [urlIsValid, setUrlIsValid] = useState(false);
 
   const [videoData, setVideoData] = useState({});
 
   const [captionsData, setCaptionsData] = useState([]);
+
+  const [videoDownloadOptions, setVideoDownloadOptions] = useState([]);
 
   const [downloadFailed, SetDownloadFailed] = useState(false);
 
@@ -71,6 +88,12 @@ export default function Video({ embed }) {
       نیاز دارد VPN به
     </Tooltip>
   );
+
+  const handleVideoDownloadRequest = async (screen) => {
+    await getVideoDownloadOptions();
+    if (screen === "desktop") setShowDownloadVideoModal(true);
+    if (screen === "mobile") setShowDownloadVideoCanvasMobile(true);
+  };
 
   const handleSubtitleDownloadRequest = (screen) => {
     if (captionsData.length === 0) setShowNoSubtitleModal(true);
@@ -85,6 +108,11 @@ export default function Video({ embed }) {
       "downloading " + subtitleInfo.id + " " + subtitleInfo.languageCode
     );
     downloadSubtitle(subtitleInfo);
+    SetDownloadFailed(true);
+  };
+
+  const initializeVideoDownload = (videoInfo) => {
+    console.log("downloading " + videoInfo.itag + " " + videoInfo.url);
     SetDownloadFailed(true);
   };
 
@@ -121,6 +149,19 @@ export default function Video({ embed }) {
     } catch (error) {
       console.log("error:", error);
     } finally {
+    }
+  };
+
+  const getVideoDownloadOptions = async () => {
+    try {
+      setVideoDownloadOptionsIsLoading(true);
+      const downloadOptions = await getYTVideoDownloadFormats(id); // you can chack if it's already been get before so you dont load it again !
+      setVideoDownloadOptions(downloadOptions);
+    } catch (error) {
+      SetDownloadFailed(true);
+      console.log("error:", error);
+    } finally {
+      setVideoDownloadOptionsIsLoading(false);
     }
   };
 
@@ -347,8 +388,16 @@ export default function Video({ embed }) {
                       </div>
 
                       <div className="mt-4">
-                        <Button className="btn-pink btn-no-bs w-100">
-                          دانلود ویدیو
+                        <Button
+                          className="btn-pink btn-no-bs w-100"
+                          onClick={() => handleVideoDownloadRequest("desktop")}
+                        >
+                          {videoDownloadOptionsIsLoading === true && (
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Spinner animation="border" />
+                            </div>
+                          )}
+                          {!videoDownloadOptionsIsLoading && "دانلود ویدیو"}
                         </Button>
                       </div>
                     </Stack>
@@ -377,6 +426,14 @@ export default function Video({ embed }) {
               showC={showDownloadSubtitleCanvasMobile}
               captionsData={captionsData}
               onDownloadRequest={initializeSubtitleDownload}
+            />
+          }
+          {
+            <DownloadVideoModal
+              onShow={setShowDownloadVideoModal}
+              showP={showDownloadVideoModal}
+              optionsData={videoDownloadOptions}
+              onDownloadRequest={initializeVideoDownload}
             />
           }
           {
