@@ -15,6 +15,7 @@ import DownloadFailedToast from "../toast/DownloadFailedToast";
 import DownloadSubtitleCanvasMobile from "../canvas/DownloadSubtitleCanvasMobile";
 import DownloadVideoModal from "../modal/DownloadVideoModal";
 import DownloadVideoCanvasMobile from "../canvas/DownloadVideoCanvasMobile";
+import VideoPlayer from "./VideoPlayer";
 import {
   Button,
   Col,
@@ -44,6 +45,7 @@ import {
   getYTVideoDownloadFormats,
   getYTVideoStreamData,
 } from "../../utils/serverAPI/serverAPI";
+import { getShortenedNumber } from "../../utils/string/StringUtils";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 
 export default function Video({ embed }) {
@@ -95,12 +97,6 @@ export default function Video({ embed }) {
       نیاز دارد VPN به
     </Tooltip>
   );
-
-  const handleVideoDownloadRequest = async (screen) => {
-    await getVideoDownloadOptions();
-    if (screen === "desktop") setShowDownloadVideoModal(true);
-    if (screen === "mobile") setShowDownloadVideoCanvasMobile(true);
-  };
 
   const handleSubtitleDownloadRequest = (screen) => {
     if (captionsData.length === 0) setShowNoSubtitleModal(true);
@@ -162,7 +158,6 @@ export default function Video({ embed }) {
       setChannelData(response);
       console.log("this is channel data");
       console.log(response);
-      // Do something with the channel data, e.g., set it in state
     } catch (error) {
       console.error("Error:", error);
     }
@@ -198,6 +193,7 @@ export default function Video({ embed }) {
       if (videoDownloadOptions.length === 0) {
         const downloadOptions = await getYTVideoDownloadFormats(id); // you can chack if it's already been get before so you dont load it again !
         setVideoDownloadOptions(downloadOptions);
+        console.log(downloadOptions);
       }
       if (screen === "desktop") setShowDownloadVideoModal(true);
       if (screen === "mobile") setShowDownloadVideoCanvasMobile(true);
@@ -231,10 +227,13 @@ export default function Video({ embed }) {
           <div className="video-container mb-5">
             <div className="d-flex justify-content-center mt-3">
               {!embed && (
-                <video className="yt-video w-100" controls>
-                  <source src={videoStreamData.url} />
-                  Your browser does not support the video tag.
-                </video>
+                // <video className="yt-video w-100" controls>
+                //   <source src={videoStreamData.url} />
+                //   Your browser does not support the video tag.
+                // </video>
+                <div className="yt-video w-100" controls>
+                  <VideoPlayer videoUrl={videoStreamData.url} />
+                </div>
               )}
               {embed && (
                 <div className="yt-video w-100">
@@ -343,21 +342,22 @@ export default function Video({ embed }) {
                         height={50}
                         roundedCircle
                       />
-                      <h4 className="ps-3">
+                      <h4 className="ps-3 mb-0">
                         {videoData.videoInfo.snippet.channelTitle}
                       </h4>
+                      {!channelData.channelInfo.statistics
+                        .hiddenSubscriberCount && (
+                        <h5 className="ps-2 mb-0">
+                          (
+                          {getShortenedNumber(
+                            channelData.channelInfo.statistics.subscriberCount
+                          )}
+                          )
+                        </h5>
+                      )}
                     </div>
-                    {!channelData.channelInfo.statistics
-                      .hiddenSubscriberCount && (
-                      <h5 className="mt-2">
-                        (
-                        {parseInt(
-                          channelData.channelInfo.statistics.subscriberCount
-                        ).toLocaleString("en-US")}{" "}
-                        subscribers)
-                      </h5>
-                    )}
-                    <h4>Description: </h4>
+
+                    <h4 className="mt-2">Description: </h4>
                     <div
                       className="mt-3"
                       style={{ wordBreak: "break-all" }}

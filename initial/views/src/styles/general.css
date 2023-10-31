@@ -4,6 +4,9 @@
   padding: 0;
   line-height: 1.5 !important;
   font-family: vazirmatn;
+  /*for firefox scrollbar*/
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-purple) var(--color-bg-dark-1);
 }
 
 :root {
@@ -80,8 +83,21 @@ body {
 
 ::selection {
   background-color: var(--color-pink);
-  color: #ffffff;
+  color: var(--color-text-dark-1);
 }
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-purple); /* Color of the scroll thumb */
+  border-radius: 0.3rem;
+}
+
+/* ::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.5);
+} */
 
 .bg-1 {
   background-color: var(--color-bg-1) !important;

@@ -16,13 +16,13 @@
 }
 
 .faq-list-item.active-question {
-  border-left-color: var(--color-purple) !important;
-  border-right-color: var(--color-purple) !important;
+  border-left-color: var(--color-green) !important;
+  border-right-color: var(--color-green) !important;
   /* border-bottom-color: var(--color-purple) !important; */
 }
 
 .faq-list-item.active-question > .faq-question-container {
-  color: var(--color-purple);
+  color: var(--color-green);
 }
 
 .faq-icon {
