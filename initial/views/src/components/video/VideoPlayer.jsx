@@ -44,12 +44,15 @@ export default function VideoPlayer({ videoUrl, thumbnail, videoId }) {
           light={videoThumbnail}
           config={{
             file: {
+              attributes: {
+                // crossOrigin: "use-credentials",
+              },
               tracks: [
                 {
                   kind: "subtitles",
-                  src: captionsVTTData,
+                  src: `/api/v1/captions/${videoId}`,
                   srcLang: "en",
-                  default: false,
+                  default: true,
                 },
               ],
             },
