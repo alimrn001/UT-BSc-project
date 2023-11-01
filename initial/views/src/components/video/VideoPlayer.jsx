@@ -17,36 +17,21 @@ export default function VideoPlayer({ videoUrl, thumbnail, videoId }) {
   useEffect(() => {
     setUrl(videoUrl);
     setVideoThumbnail(thumbnail);
-    getCaptionsVTTData();
+    // getCaptionsVTTData();
   }, [videoUrl, thumbnail]);
-
-  // const formattedCaptions = captionsData.map((caption) => ({
-  //   text: caption.text,
-  //   start: caption.start,
-  //   end: caption.start + caption.duration,
-  // }));
-
-  // const config = {
-  //   file: {
-  //     tracks: formattedCaptions,
-  //   },
-  // };
 
   return (
     <>
       {videoUrl === undefined && <VideoLoading />}
       {videoUrl !== undefined && (
         <ReactPlayer
-          url={url} // Replace with your video URL
-          controls // Display player controls (e.g., play, pause, volume)
-          width="100%" // Set the player width
-          height="100%" // Set the player height
+          url={url}
+          controls
+          width="100%"
+          height="100%"
           light={videoThumbnail}
           config={{
             file: {
-              attributes: {
-                // crossOrigin: "use-credentials",
-              },
               tracks: [
                 {
                   kind: "subtitles",

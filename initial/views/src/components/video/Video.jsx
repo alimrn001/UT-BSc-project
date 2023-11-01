@@ -47,6 +47,7 @@ import {
   getYTVideoThumbnail,
   getYTVideoCaptions,
 } from "../../utils/serverAPI/serverAPI";
+import { DownloadYTVideoSubtitle } from "../../utils/download/Download";
 import { getShortenedNumber } from "../../utils/string/StringUtils";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 
@@ -111,11 +112,13 @@ export default function Video({ embed }) {
   };
 
   const initializeSubtitleDownload = (subtitleInfo) => {
-    console.log(
-      "downloading " + subtitleInfo.id + " " + subtitleInfo.languageCode
-    );
-    downloadSubtitle(subtitleInfo);
-    SetDownloadFailed(true);
+    if (subtitleInfo !== 0) {
+      try {
+        DownloadYTVideoSubtitle(id, subtitleInfo.languageCode);
+      } catch (error) {
+        SetDownloadFailed(true);
+      }
+    }
   };
 
   const initializeVideoDownload = async (videoInfo) => {
