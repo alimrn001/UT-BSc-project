@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 pillow = "*"
 django-cors-headers = "*"
+youtube-transcript-api = "*"
 
 [dev-packages]
 

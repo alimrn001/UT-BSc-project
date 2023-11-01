@@ -20,11 +20,13 @@ from django.urls import path, include
 from thumbnail.views import get_thumbnail
 from videoDownloader.views import get_video_streaming_url
 from videoFormats.views import get_video_formats
+from captions.views import get_captions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/v1/video/<str:video_id>/', include('videoDownloader.urls')),
     path('api/v1/video/<str:video_id>/', get_video_streaming_url, name='get_video_streaming_url'),
     path('api/v1/thumbnail/<str:video_id>/', get_thumbnail, name='get_thumbnail'),
-    path('api/v1/formats/<str:video_id>/', get_video_formats, name='get_video_formats')
+    path('api/v1/formats/<str:video_id>/', get_video_formats, name='get_video_formats'),
+    path('api/v1/captions/<str:video_id>/', get_captions, name='get_captions'),
 ]

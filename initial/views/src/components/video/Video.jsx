@@ -44,6 +44,8 @@ import {
 import {
   getYTVideoDownloadFormats,
   getYTVideoStreamData,
+  getYTVideoThumbnail,
+  getYTVideoCaptions,
 } from "../../utils/serverAPI/serverAPI";
 import { getShortenedNumber } from "../../utils/string/StringUtils";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
@@ -91,6 +93,8 @@ export default function Video({ embed }) {
   const [downloadFailed, SetDownloadFailed] = useState(false);
 
   const [channelData, setChannelData] = useState({});
+
+  const [videoThumbnail, setVideoThumbnail] = useState(null);
 
   const renderEmbedVPNTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -205,13 +209,34 @@ export default function Video({ embed }) {
     }
   };
 
+  const getVideoThumbnail = async () => {
+    try {
+      const response = await getYTVideoThumbnail(id);
+      setVideoThumbnail(`data:;base64,${response}`);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getVideoCaptionsTrackData = async () => {
+    try {
+      const response = await getYTVideoCaptions(id);
+      console.log("captions track data: ");
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       setIsLoading(true);
       const result = await YTUrlIsValid(getYtVideoUrlById(id));
       setUrlIsValid(result);
       if (result) {
-        await getVideoStreamData();
+        getVideoStreamData();
+        getVideoCaptionsTrackData();
+        await getVideoThumbnail();
         await getVideoData();
         await getVideoCaptions();
       }
@@ -232,7 +257,10 @@ export default function Video({ embed }) {
                 //   Your browser does not support the video tag.
                 // </video>
                 <div className="yt-video w-100" controls>
-                  <VideoPlayer videoUrl={videoStreamData.url} />
+                  <VideoPlayer
+                    videoUrl={videoStreamData.url}
+                    thumbnail={videoThumbnail}
+                  />
                 </div>
               )}
               {embed && (

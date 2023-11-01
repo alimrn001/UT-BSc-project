@@ -76,3 +76,19 @@ export async function getYTVideoDownloadFormats(videoId) {
     throw new Error("Error getting video download options!");
   }
 }
+
+export async function getYTVideoCaptions(videoId) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/captions/${videoId}/`
+    );
+    if (response.status === 200) {
+      const data = response.data.captions;
+      return data;
+    } else {
+      console.error("Failed to fetch video captions:", response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error getting video captions!");
+  }
+}
