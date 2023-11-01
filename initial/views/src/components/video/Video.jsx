@@ -88,6 +88,8 @@ export default function Video({ embed }) {
 
   const [captionsData, setCaptionsData] = useState([]);
 
+  const [enCaptionTracks, setEnCaptionTracks] = useState();
+
   const [videoDownloadOptions, setVideoDownloadOptions] = useState([]);
 
   const [downloadFailed, SetDownloadFailed] = useState(false);
@@ -218,9 +220,10 @@ export default function Video({ embed }) {
     }
   };
 
-  const getVideoCaptionsTrackData = async () => {
+  const getVideoEnglishCaptionTracks = async () => {
     try {
       const response = await getYTVideoCaptions(id);
+      setEnCaptionTracks(response);
       console.log("captions track data: ");
       console.log(response);
     } catch (error) {
@@ -235,7 +238,7 @@ export default function Video({ embed }) {
       setUrlIsValid(result);
       if (result) {
         getVideoStreamData();
-        getVideoCaptionsTrackData();
+        getVideoEnglishCaptionTracks();
         await getVideoThumbnail();
         await getVideoData();
         await getVideoCaptions();
@@ -260,6 +263,7 @@ export default function Video({ embed }) {
                   <VideoPlayer
                     videoUrl={videoStreamData.url}
                     thumbnail={videoThumbnail}
+                    captions={enCaptionTracks}
                   />
                 </div>
               )}
