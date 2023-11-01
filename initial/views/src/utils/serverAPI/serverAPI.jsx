@@ -83,7 +83,7 @@ export async function getYTVideoCaptions(videoId) {
       `http://localhost:8000/api/v1/captions/${videoId}/`
     );
     if (response.status === 200) {
-      const data = response.data.captions;
+      const data = response.data;
       return data;
     } else {
       console.error("Failed to fetch video captions:", response.statusText);

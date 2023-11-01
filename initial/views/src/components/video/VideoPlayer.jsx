@@ -1,30 +1,36 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import VideoLoading from "../shared/loading/VideoLoading";
-import videoSubtitles from "../../static/test.srt";
+import videoSubtitles from "../../static/test.vtt";
+import { getYTVideoCaptions } from "../../utils/serverAPI/serverAPI";
 
-export default function VideoPlayer({ videoUrl, thumbnail, captions }) {
+export default function VideoPlayer({ videoUrl, thumbnail, videoId }) {
   const [url, setUrl] = useState(videoUrl);
   const [videoThumbnail, setVideoThumbnail] = useState(thumbnail);
-  const [captionsData, setCaptionsData] = useState(captions);
+  const [captionsVTTData, setCaptionsVTTData] = useState();
+
+  const getCaptionsVTTData = async () => {
+    const response = await getYTVideoCaptions(videoId);
+    setCaptionsVTTData(response);
+  };
 
   useEffect(() => {
     setUrl(videoUrl);
     setVideoThumbnail(thumbnail);
-    setCaptionsData(captions);
-  }, [videoUrl, thumbnail, captions]);
+    getCaptionsVTTData();
+  }, [videoUrl, thumbnail]);
 
-  const formattedCaptions = captionsData.map((caption) => ({
-    text: caption.text,
-    start: caption.start,
-    end: caption.start + caption.duration,
-  }));
+  // const formattedCaptions = captionsData.map((caption) => ({
+  //   text: caption.text,
+  //   start: caption.start,
+  //   end: caption.start + caption.duration,
+  // }));
 
-  const config = {
-    file: {
-      tracks: formattedCaptions,
-    },
-  };
+  // const config = {
+  //   file: {
+  //     tracks: formattedCaptions,
+  //   },
+  // };
 
   return (
     <>
@@ -41,9 +47,9 @@ export default function VideoPlayer({ videoUrl, thumbnail, captions }) {
               tracks: [
                 {
                   kind: "subtitles",
-                  src: videoSubtitles,
+                  src: captionsVTTData,
                   srcLang: "en",
-                  default: true,
+                  default: false,
                 },
               ],
             },
