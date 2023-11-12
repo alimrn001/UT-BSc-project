@@ -50,6 +50,7 @@ import {
 import { DownloadYTVideoSubtitle } from "../../utils/download/Download";
 import { getShortenedNumber } from "../../utils/string/StringUtils";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
+import ExperimentalViewModal from "../modal/ExperimentalViewModal";
 
 export default function Video({ embed }) {
   const location = useLocation();
@@ -68,6 +69,8 @@ export default function Video({ embed }) {
   ] = useState(false);
 
   const [showDownloadVideoModal, setShowDownloadVideoModal] = useState(false);
+
+  const [showExpViewModal, setShowExpViewModal] = useState(false);
 
   const [
     showDownloadVideoCanvasMobile,
@@ -99,7 +102,7 @@ export default function Video({ embed }) {
 
   const renderEmbedVPNTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      نیاز دارد VPN به
+      VPN بدون نیاز به
     </Tooltip>
   );
 
@@ -290,7 +293,7 @@ export default function Video({ embed }) {
                   >
                     <Stack>
                       <div className="d-flex align-items-center flex-wrap">
-                        <BsEye style={{ height: 20, width: 20 }} />
+                        <BsEye className="text-purple icon-20" />
                         <span className="video-info-item ps-3">
                           {parseInt(
                             videoData.statistics.viewCount
@@ -299,7 +302,7 @@ export default function Video({ embed }) {
                       </div>
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
-                        <BsHandThumbsUp style={{ height: 20, width: 20 }} />
+                        <BsHandThumbsUp className="text-orange icon-20" />
                         <span className="video-info-item ps-3">
                           {parseInt(
                             videoData.statistics.likeCount
@@ -308,7 +311,7 @@ export default function Video({ embed }) {
                       </div>
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
-                        <BsCalendarDate style={{ height: 20, width: 20 }} />
+                        <BsCalendarDate className="text-green icon-20" />
                         <span className="video-info-item ps-3">
                           {new Date(
                             videoData.videoInfo.snippet.publishedAt
@@ -317,7 +320,7 @@ export default function Video({ embed }) {
                       </div>
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
-                        <BsClock style={{ height: 20, width: 20 }} />
+                        <BsClock className="text-pink icon-20" />
                         <span className="video-info-item ps-3">
                           {convertYouTubeDurationToMinutes(
                             videoData.videoInfo.contentDetails.duration
@@ -327,7 +330,7 @@ export default function Video({ embed }) {
                       </div>
 
                       <div className="d-flex align-items-center mt-3 flex-wrap">
-                        <BsCcSquare style={{ height: 20, width: 20 }} />
+                        <BsCcSquare className="text-alert icon-20" />
                         {captionsData.map((caption, idx) => (
                           <span
                             className={`video-info-item ${
@@ -405,13 +408,13 @@ export default function Video({ embed }) {
                         <Link
                           to={getYtVideoUrlById(id)}
                           target="_blank"
-                          className="url-purple fs-5"
+                          className="url-green fs-5"
                         >
                           مشاهده در YouTube
                         </Link>
                       </div>
 
-                      <div className="mt-4">
+                      {/* <div className="mt-4">
                         {!embed && (
                           <OverlayTrigger
                             placement="left"
@@ -431,6 +434,21 @@ export default function Video({ embed }) {
                             نمایش به صورت Video
                           </Link>
                         )}
+                      </div> */}
+
+                      <div className="mt-4">
+                        <OverlayTrigger
+                          placement="left"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderEmbedVPNTooltip}
+                        >
+                          <Button
+                            className="btn-orange btn-no-bs w-100"
+                            onClick={() => setShowExpViewModal(true)}
+                          >
+                            مشاهده در حالت آزمایشی
+                          </Button>
+                        </OverlayTrigger>
                       </div>
 
                       <div className="fs-5 mt-4">
@@ -520,6 +538,12 @@ export default function Video({ embed }) {
               showC={showDownloadVideoCanvasMobile}
               optionsData={videoDownloadOptions}
               onDownloadRequest={initializeVideoDownload}
+            />
+          }
+          {
+            <ExperimentalViewModal
+              onShow={setShowExpViewModal}
+              showP={showExpViewModal}
             />
           }
           {

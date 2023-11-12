@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, Stack } from "react-bootstrap";
 import { BsXLg } from "react-icons/bs";
-import { getLanguageTranslationByCode } from "../../utils/translation/Translation";
 
 export default function DownloadVideoModal({
   showP,

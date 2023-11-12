@@ -2,16 +2,6 @@
   min-height: 85vh;
 }
 
-.url-purple {
-  color: var(--color-purple);
-  text-decoration: none;
-}
-
-.url-purple:hover {
-  color: var(--color-purple);
-  text-decoration: underline;
-}
-
 .url-input-group {
   margin-top: 5%;
   padding-left: 25%;

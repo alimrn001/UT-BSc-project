@@ -12,6 +12,7 @@
 :root {
   --color-purple: #8244ff;
   --color-pink: #ff57c3;
+  --color-orange: #ff9f24;
 
   --color-green-dark: #16f8b6;
   --color-green-light: #198754;
@@ -115,6 +116,10 @@ body {
   background-color: var(--color-pink) !important;
 }
 
+.bg-orange {
+  background-color: var(--color-orange) !important;
+}
+
 .bg-green {
   background-color: var(--color-green) !important;
 }
@@ -133,6 +138,10 @@ body {
 
 .text-pink {
   color: var(--color-pink) !important;
+}
+
+.text-orange {
+  color: var(--color-orange) !important;
 }
 
 .text-green {
@@ -169,6 +178,21 @@ body {
   border-color: var(--color-pink) !important;
 }
 
+.btn-orange {
+  background-color: var(--color-orange) !important;
+  border-color: var(--color-orange) !important;
+}
+
+.btn-orange:hover {
+  color: var(--color-text-light-1) !important;
+}
+
+.btn-green {
+  background-color: var(--color-green) !important;
+  border-color: var(--color-green) !important;
+  color: var(--color-bg-1) !important;
+}
+
 .btn-outline-green {
   background-color: var(--color-bg-1) !important;
   color: var(--color-green) !important;
@@ -200,4 +224,39 @@ body {
 
 .pointer {
   cursor: pointer;
+}
+
+.url-purple {
+  color: var(--color-purple);
+  text-decoration: none;
+}
+
+.url-purple:hover {
+  color: var(--color-purple);
+  text-decoration: underline;
+}
+
+.url-green {
+  color: var(--color-green);
+  text-decoration: none;
+}
+
+.url-green:hover {
+  color: var(--color-green);
+  text-decoration: underline;
+}
+
+.icon-20 {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-22 {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-24 {
+  width: 24px;
+  height: 24px;
 }

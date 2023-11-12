@@ -60,9 +60,9 @@ export default function Home() {
         className="d-flex flex-column align-items-center px-3"
         style={{ textAlign: "center" }}
       >
-        <h1 className="text-purple">YtDown</h1>
+        <h1 className="text-purple">AppName</h1>
         <h5 className="mt-1">
-          با استفاده از YtDown ویدیو‌های مورد علاقه خود در{" "}
+          با استفاده از AppName ویدیو‌های مورد علاقه خود در{" "}
           <Link to="https://youtube.com" className="url-purple">
             YouTube
           </Link>{" "}

@@ -49,7 +49,7 @@ export default function Navbar() {
             height="45"
             className="d-inline-block align-text-top"
           />
-          <span className="text-1 pe-1">YtDown</span>
+          <span className="text-1 pe-1">App name</span>
         </Link>
         <div className="d-flex align-items-center">
           <Link to="/faq">
@@ -58,7 +58,7 @@ export default function Navbar() {
               variant=""
               // onClick={(e) => navigateToFAQ(e)}
             >
-              <BsQuestionCircle style={{ width: 22, height: 22 }} />
+              <BsQuestionCircle className="icon-22" />
             </Button>
           </Link>
           <Button
@@ -67,12 +67,8 @@ export default function Navbar() {
             variant=""
             onClick={toggleTheme}
           >
-            {theme === "light" && (
-              <BsMoonFill style={{ width: 20, height: 20 }} />
-            )}
-            {theme === "dark" && (
-              <BsSunFill style={{ width: 24, height: 24 }} />
-            )}
+            {theme === "light" && <BsMoonFill className="icon-20" />}
+            {theme === "dark" && <BsSunFill className="icon-24" />}
           </Button>
         </div>
       </div>
