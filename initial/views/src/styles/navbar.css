@@ -6,6 +6,12 @@
   color: var(--color-purple) !important;
 }
 
+@media only screen and (max-width: 768px) {
+  .navbar-logo {
+    justify-content: center;
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .navbar-brand {
     margin-right: 0 !important;

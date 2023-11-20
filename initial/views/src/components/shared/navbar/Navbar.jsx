@@ -4,8 +4,9 @@ import {
   BsSunFill,
   BsQuestionCircle,
   BsList,
+  BsSearch,
 } from "react-icons/bs";
-import { CiMenuBurger } from "react-icons/ci";
+import { AiOutlineMenu } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
@@ -47,12 +48,17 @@ export default function Navbar() {
   return (
     <nav className="navbar bg-1 justify-content-between">
       <div className="container-fluid navbar-container">
-        <div className="col-2 d-sm-flex d-md-none justify-content-center">
-          sidebar icon
+        <div className="col-2 d-flex d-md-none justify-content-start">
+          <Button
+            className="btn btn-no-bs theme-toggle-btn text-1 p-0"
+            variant=""
+          >
+            <AiOutlineMenu className="icon-26 me-1" />
+          </Button>
         </div>
 
         <Link
-          className="col-8 col-md-2 d-flex justify-content-center align-items-center text-center"
+          className="col-8 col-md-2 d-flex align-items-center text-center text-decoration-none navbar-logo"
           to="/"
         >
           <img
@@ -65,13 +71,43 @@ export default function Navbar() {
           <span className="text-1 pe-1 d-none d-md-block">App name</span>
         </Link>
 
-        <div className="col-8 d-none d-md-block">search form</div>
-
-        <div className="col-2 d-sm-flex d-md-none justify-content-center">
-          search icon
+        <div className="col-8 d-none d-md-block">
+          <Form.Control
+            className="bg-dark text-light"
+            size="lg"
+            type="text"
+            placeholder="جستجو در YouTube"
+          />
         </div>
 
-        <div className="col-2 d-md-flex d-none">util</div>
+        <div className="col-2 d-flex d-md-none justify-content-end">
+          <Button
+            className="btn btn-no-bs theme-toggle-btn text-1 p-0"
+            variant=""
+          >
+            <BsSearch className="icon-22 ms-1" />
+          </Button>
+        </div>
+
+        <div className="col-2 d-md-flex d-none justify-content-end">
+          <Link to="/faq">
+            <Button
+              className="btn btn-no-bs theme-toggle-btn text-1"
+              variant=""
+            >
+              <BsQuestionCircle className="icon-22" />
+            </Button>
+          </Link>
+          <Button
+            className="btn text-1 btn-no-bs theme-toggle-btn d-flex align-items-center"
+            type="button"
+            variant=""
+            onClick={toggleTheme}
+          >
+            {theme === "light" && <BsMoonFill className="icon-20" />}
+            {theme === "dark" && <BsSunFill className="icon-24" />}
+          </Button>
+        </div>
         {/* <Link className="col-2 d-flex align-items-center d-sm-none" to="/">
           salam
         </Link>
