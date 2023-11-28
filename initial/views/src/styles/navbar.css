@@ -6,6 +6,11 @@
   color: var(--color-purple) !important;
 }
 
+.theme-collapse-menu {
+  border: solid 1px var(--color-text-1) !important;
+  border-radius: 0.3rem !important;
+}
+
 @media only screen and (max-width: 768px) {
   .navbar-logo {
     justify-content: center;

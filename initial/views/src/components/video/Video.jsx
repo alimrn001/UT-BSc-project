@@ -51,8 +51,9 @@ import { DownloadYTVideoSubtitle } from "../../utils/download/Download";
 import { getShortenedNumber } from "../../utils/string/StringUtils";
 import { convertYouTubeDurationToMinutes } from "../../utils/dateTime/DateTimeConverter";
 import ExperimentalViewModal from "../modal/ExperimentalViewModal";
+import ExpVideoPlayer from "./ExpVideoPlayer";
 
-export default function Video({ embed }) {
+export default function Video({ exp }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -246,7 +247,7 @@ export default function Video({ embed }) {
         <div className="main-body">
           <div className="video-container mb-5">
             <div className="d-flex justify-content-center mt-3">
-              {!embed && (
+              {!exp && (
                 // <video className="yt-video w-100" controls>
                 //   <source src={videoStreamData.url} />
                 //   Your browser does not support the video tag.
@@ -259,18 +260,9 @@ export default function Video({ embed }) {
                   />
                 </div>
               )}
-              {embed && (
-                <div className="yt-video w-100">
-                  <iframe
-                    // width="560"
-                    // height="315"
-                    src="https://www.youtube.com/embed/6dOwHzCHfgA?si=gYPjE8PfJv8PO5s-"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                  ></iframe>
-                  <p className="caption mt-5 fs-3">salam</p>
+              {exp && (
+                <div className="yt-video w-100" controls>
+                  <ExpVideoPlayer thumbnail={videoThumbnail} videoId={id} />
                 </div>
               )}
               {/* {videoBlob && (

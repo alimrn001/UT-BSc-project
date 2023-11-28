@@ -21,6 +21,7 @@ from thumbnail.views import get_thumbnail
 from videoDownloader.views import get_video_streaming_url
 from videoFormats.views import get_video_formats
 from captions.views import get_captions
+from stream.views import stream_video
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('api/v1/thumbnail/<str:video_id>/', get_thumbnail, name='get_thumbnail'),
     path('api/v1/formats/<str:video_id>/', get_video_formats, name='get_video_formats'),
     path('api/v1/captions/<str:video_id>/', get_captions, name='get_captions'),
+    path('api/v1/stream/<str:video_id>/', stream_video, name='stream_video'),
 ]

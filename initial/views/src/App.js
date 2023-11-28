@@ -6,6 +6,7 @@ import Home from "./components/home/Home";
 import VideoPlayer from "./components/video/Video";
 import Error from "./components/shared/errors/Error";
 import FAQ from "./components/pages/FAQ";
+import SearchResults from "./components/searchResults/SearchResults";
 
 const fontLink = document.createElement("link");
 fontLink.href =
@@ -20,9 +21,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="watch/:id" element={<VideoPlayer embed={false} />} />
-            <Route path="embed/:id" element={<VideoPlayer embed={true} />} />
+            <Route path="watch/:id" element={<VideoPlayer exp={false} />} />
+            <Route path="watch/:id/exp" element={<VideoPlayer exp={true} />} />
             <Route path="faq" element={<FAQ />} />
+            <Route path="search" element={<SearchResults />} />
             <Route path="*" element={<Error code={404} />} />
           </Route>
         </Routes>

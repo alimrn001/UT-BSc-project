@@ -10,10 +10,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
+import NavbarSideCanvas from "../../canvas/NavbarSideCanvas";
 
 export default function Navbar() {
   const [theme, setTheme] = useState(getCurrentTheme());
   const navigate = useNavigate();
+  const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
     loadTheme(theme);
@@ -50,8 +52,9 @@ export default function Navbar() {
       <div className="container-fluid navbar-container">
         <div className="col-2 d-flex d-md-none justify-content-start">
           <Button
-            className="btn btn-no-bs theme-toggle-btn text-1 p-0"
+            className="btn btn-no-bs text-1 p-0"
             variant=""
+            onClick={() => setShowSidebar(true)}
           >
             <AiOutlineMenu className="icon-26 me-1" />
           </Button>
@@ -108,6 +111,14 @@ export default function Navbar() {
             {theme === "dark" && <BsSunFill className="icon-24" />}
           </Button>
         </div>
+        {
+          <NavbarSideCanvas
+            onShow={setShowSidebar}
+            showS={showSidebar}
+            theme={theme}
+            onThemeChange={toggleTheme}
+          />
+        }
         {/* <Link className="col-2 d-flex align-items-center d-sm-none" to="/">
           salam
         </Link>

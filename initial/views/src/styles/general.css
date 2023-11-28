@@ -23,6 +23,9 @@
   --color-bg-dark-2: #0a0f1c;
   --color-bg-light-2: #e9ecef;
 
+  --color-bg-dark-3: #181f36;
+  --color-bg-light-3: #efefef;
+
   --color-bg-alert-dark: #300303;
   --color-bg-alert-light: #ffd9d9;
 
@@ -38,6 +41,7 @@
   :root {
     --color-bg-1: var(--color-bg-dark-1);
     --color-bg-2: var(--color-bg-dark-2);
+    --color-bg-3: var(--color-bg-dark-3);
     --color-text-1: var(--color-text-dark-1);
     --color-green: var(--color-green-dark);
     --color-bg-alert: var(--color-bg-alert-dark);
@@ -48,6 +52,7 @@
   :root {
     --color-bg-1: var(--color-bg-light-1);
     --color-bg-2: var(--color-bg-light-2);
+    --color-bg-3: var(--color-bg-light-3);
     --color-text-1: var(--color-text-light-1);
     --color-green: var(--color-green-light);
     --color-bg-alert: var(--color-bg-alert-light);
@@ -69,6 +74,7 @@ body {
 [color-scheme="dark"] {
   --color-bg-1: var(--color-bg-dark-1);
   --color-bg-2: var(--color-bg-dark-2);
+  --color-bg-3: var(--color-bg-dark-3);
   --color-text-1: var(--color-text-dark-1);
   --color-green: var(--color-green-dark);
   --color-bg-alert: var(--color-bg-alert-dark);
@@ -77,6 +83,7 @@ body {
 [color-scheme="light"] {
   --color-bg-1: var(--color-bg-light-1);
   --color-bg-2: var(--color-bg-light-2);
+  --color-bg-3: var(--color-bg-light-3);
   --color-text-1: var(--color-text-light-1);
   --color-green: var(--color-green-light);
   --color-bg-alert: var(--color-bg-alert-light);
@@ -106,6 +113,10 @@ body {
 
 .bg-2 {
   background-color: var(--color-bg-2) !important;
+}
+
+.bg-3 {
+  background-color: var(--color-bg-3) !important;
 }
 
 .bg-purple {
@@ -246,6 +257,11 @@ body {
   text-decoration: underline;
 }
 
+.icon-18 {
+  width: 18px;
+  height: 18px;
+}
+
 .icon-20 {
   width: 20px;
   height: 20px;
@@ -264,4 +280,8 @@ body {
 .icon-26 {
   width: 26px;
   height: 26px;
+}
+
+.border-top-solid {
+  border-top: solid 1px var(--color-text-1) !important;
 }

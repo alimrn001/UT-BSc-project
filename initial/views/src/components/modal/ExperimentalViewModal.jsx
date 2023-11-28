@@ -27,16 +27,14 @@ export default function ExperimentalViewModal({ showP, onShow }) {
           <Modal.Title>مشاهده ویدیو در حالت آزمایشی</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-1 text-1">
-          <p className="fs-5">
+          <p className="fw-bold">
             در حالت آزمایشی می توانید ویدیو مورد نظر خود را
             <span className="text-green"> بدون نیاز به VPN </span> مشاهده کنید.
           </p>
         </Modal.Body>
         <Modal.Footer className="video-info-modal-footer d-flex justify-content-between bg-1 text-1">
-          <Link to="">
-            <Button className="btn btn-orange btn-no-bs" disabled>
-              مشاهده
-            </Button>
+          <Link to="./exp">
+            <Button className="btn btn-orange btn-no-bs">مشاهده</Button>
           </Link>
           <Button className="btn btn-purple btn-no-bs" onClick={handleClose}>
             بستن
