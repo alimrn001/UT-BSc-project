@@ -133,22 +133,6 @@ export default function Video({ exp }) {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    // try {
-    //   const response = await axios.get(videoInfo.url, { responseType: "blob" });
-    //   const url = window.URL.createObjectURL(new Blob([response.data]));
-    //   const a = document.createElement("a");
-    //   a.href = url;
-    //   a.download = `${videoData.videoInfo.snippet.title}_${
-    //     videoInfo.type === "video" ? videoInfo.resolution : videoInfo.audio_abr
-    //   }.${videoInfo.extension.split("/")[1]}`; // You can set the downloaded file name here
-    //   document.body.appendChild(a);
-    //   a.click();
-    //   document.body.removeChild(a);
-    //   window.URL.revokeObjectURL(url);
-    // } catch (error) {
-    //   SetDownloadFailed(true);
-    //   console.error("Error downloading the video:", error);
-    // }
   };
 
   const getVideoStreamData = async () => {

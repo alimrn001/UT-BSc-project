@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="main-body">
       <div
-        className="d-flex flex-column align-items-center px-3 mt-2"
+        className="d-flex flex-column align-items-center px-3 mt-4"
         style={{ textAlign: "center" }}
       >
         <h1 className="text-purple">AppName</h1>

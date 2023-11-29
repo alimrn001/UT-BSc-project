@@ -257,6 +257,15 @@ body {
   text-decoration: underline;
 }
 
+.url-purple-hover {
+  color: var(--color-text-1);
+  text-decoration: none;
+}
+
+.url-purple-hover:hover {
+  color: var(--color-purple);
+}
+
 .icon-18 {
   width: 18px;
   height: 18px;

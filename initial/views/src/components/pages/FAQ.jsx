@@ -36,7 +36,7 @@ export default function FAQ() {
 
   return (
     <div className="main-body container">
-      <div className="d-flex justify-content-center mt-3 text-purple">
+      <div className="d-flex justify-content-center mt-4 text-purple">
         <h2>پرسش‌های متداول</h2>
       </div>
       <div className="mt-5">

@@ -17,6 +17,7 @@ import {
   BsArrowDownShort,
   BsCheckLg,
 } from "react-icons/bs";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
 export default function NavbarSideCanvas({
   showS,
@@ -89,7 +90,10 @@ export default function NavbarSideCanvas({
                 <span className="video-info-item pe-3">انتخاب تم</span>
               </div>
               <div>
-                <BsArrowDownShort className="icon-24" />
+                {themeCollpaseMenuIsOpen && <FaAngleUp className="icon-20" />}
+                {!themeCollpaseMenuIsOpen && (
+                  <FaAngleDown className="icon-20" />
+                )}
               </div>
             </div>
           </div>
@@ -101,19 +105,19 @@ export default function NavbarSideCanvas({
               in={themeCollpaseMenuIsOpen}
               //   dimension="width"
             >
-              <div className="ltr">
+              <div className="rtl">
                 <div
                   className="d-flex flex-wrap align-items-center justify-content-between p-2"
                   onClick={() => setTheme("dark")}
                 >
-                  <span className="fs-5">Dark</span>
+                  <span style={{ fontSize: "1.1rem" }}>تاریک</span>
                   {theme === "dark" && <BsCheckLg className="icon-18" />}
                 </div>
                 <div
                   className="d-flex flex-wrap align-items-center justify-content-between border-top-solid p-2"
                   onClick={() => setTheme("light")}
                 >
-                  <span className="fs-5">Light</span>
+                  <span style={{ fontSize: "1.1rem" }}>روشن</span>
                   {theme === "light" && <BsCheckLg className="icon-20" />}
                 </div>
               </div>
