@@ -5,8 +5,10 @@ import { Card } from "react-bootstrap";
 
 export default function VideoItemGrid({ data }) {
   return (
-    <Card className="bg-1">
-      <Card.Img variant="top" src={data.videoThumbnails[0].url} />
+    <Card className="bg-1 border-0 p-1">
+      <Link to={`/watch/${data.videoId}`}>
+        <Card.Img variant="top" src={data.videoThumbnails[0].url} />
+      </Link>
       <Card.Body>
         <Card.Title>
           <Link to={`/watch/${data.videoId}`} className="url-purple-hover">

@@ -24,6 +24,6 @@ export async function getSearchResults(q, type, page) {
     const searchResults = response.data;
     return searchResults;
   } catch (error) {
-    console.error("Error:", error);
+    throw new Error(error);
   }
 }
