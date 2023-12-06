@@ -390,28 +390,6 @@ export default function Video({ exp }) {
                         </Link>
                       </div>
 
-                      {/* <div className="mt-4">
-                        {!embed && (
-                          <OverlayTrigger
-                            placement="left"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={renderEmbedVPNTooltip}
-                          >
-                            <Link
-                              to={`/embed/${id}`}
-                              className="url-purple fs-5"
-                            >
-                              نمایش به صورت Embed
-                            </Link>
-                          </OverlayTrigger>
-                        )}
-                        {embed && (
-                          <Link to={`/watch/${id}`} className="url-purple fs-5">
-                            نمایش به صورت Video
-                          </Link>
-                        )}
-                      </div> */}
-
                       <div className="mt-4">
                         <OverlayTrigger
                           placement="left"
