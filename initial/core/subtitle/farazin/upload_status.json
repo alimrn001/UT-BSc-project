@@ -1,0 +1,56 @@
+{
+  "isOcrResult": False,
+  "currentCharge": 39992,
+  "fileName": "test.vtt",
+  "fileType": 8,
+  "id": 237414,
+  "translationPrice": 0,
+  "status": 0,
+  "wordCount": 25335,
+  "progress": 0,
+  "translatedTextCount": 0,
+  "userId": "b2555b9b-7542-4010-8fc3-77182d3b3cc0",
+  "maxTranslateCount": 25335,
+  "isDownloaded": False,
+  "isProofReadingDownloaded": False,
+  "returnedWordCount": 0,
+  "proofReadingPlans": [
+    {
+      "id": "11",
+      "name": "ویرایش سبک",
+      "description": "ویرایش سبک ترجمه فرازین توسط مترجم انسانی با توجه به زمینه تخصصی متن",
+      "costPerWord": 55.0,
+      "wordCountPerDay": 2000,
+      "isEnabled": True,
+      "mode": 1,
+      "qualityId": 0,
+      "minWordCount": 0
+    },
+    {
+      "id": "046eb02f-9e75-4667-b874-248b9a2b3111",
+      "name": "ترجمه طلایی",
+      "description": "ترجمه حرفه\u200cای و تخصصی توسط مترجم با سابقه + بازخوانی رایگان",
+      "costPerWord": 370.0,
+      "wordCountPerDay": 1500,
+      "isEnabled": True,
+      "mode": 1,
+      "qualityId": 11,
+      "minWordCount": 250
+    }
+  ],
+  "mode": 1,
+  "banks": [
+    { "id": 2, "name": "بانک ملت" },
+    { "id": 3, "name": "بانک ملی" }
+  ],
+  "walletCharge": 0,
+  "packageCharge": 0,
+  "minPrice": 10000,
+  "minPriceDesc": "امکان ثبت سفارش\u200cهایی که مبلغ نهایی آنها کمتر از 10000 تومان است وجود ندارد.",
+  "addedValuePercent": 9,
+  "categoryId": 21,
+  "responseDelay": 24,
+  "revisions": [],
+  "now": "2023-12-15 14:59:43.59Z",
+  "hasFaraazinTranslation": False
+}

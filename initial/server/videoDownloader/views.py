@@ -19,14 +19,17 @@ def download_youtube_video(request):
             # Create a YouTube object and download the video
             yt = YouTube(video_url)
             stream = yt.streams.get_highest_resolution()
-            video_bytes = stream.stream_to_buffer()
+            # video_bytes = stream.stream_to_buffer()
 
             # Create a BytesIO object to hold the video content
-            video_io = io.BytesIO(video_bytes)
+            # video_io = io.BytesIO(video_bytes)
 
             # Serve the video content as a FileResponse
-            response = FileResponse(video_io, content_type='video/mp4')
-            response['Content-Disposition'] = f'attachment; filename="{yt.title}.mp4"'
+            # response = FileResponse(video_io, content_type='video/mp4')
+            # response['Content-Disposition'] = f'attachment; filename="{yt.title}.mp4"'
+
+            response = HttpResponse(stream, content_type='video/mp4')
+            response['Content-Disposition'] = 'inline; filename="video.mp4"'
 
             return response
         except Exception as e:
